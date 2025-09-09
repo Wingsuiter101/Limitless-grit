@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
+const repoBase = process.env.PAGES_BASE || '/Limitless-grit'
+
 const nextConfig = {
   output: 'export',
-  assetPrefix: '/Limitless-grit/',
-  basePath: '/Limitless-grit',
+  assetPrefix: `${repoBase}/`,
+  basePath: repoBase,
   images: {
     unoptimized: true
   }
