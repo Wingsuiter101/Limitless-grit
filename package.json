@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d out"
+    "postbuild": "node -e \"require('fs').mkdirSync('out',{recursive:true});require('fs').writeFileSync('out/.nojekyll','')\"",
+    "deploy": "gh-pages -d out --nojekyll"
   },
   "dependencies": {
     "@react-three/drei": "^9.96.1",

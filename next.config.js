@@ -5,8 +5,12 @@ const nextConfig = {
   output: 'export',
   assetPrefix: `${repoBase}/`,
   basePath: repoBase,
+  trailingSlash: true,
   images: {
     unoptimized: true
+  },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: repoBase
   }
 };
 

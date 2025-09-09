@@ -7,7 +7,7 @@ export default function FloatingLogo() {
       <Link href="/" aria-label="Go to home">
         <div className="relative bg-[#3a3a3a] rounded-b-3xl shadow-xl border border-black/10 h-[6.25rem] md:h-24 px-3 md:px-4 -translate-y-1 flex items-center justify-center">
           <Image
-            src="/limitless-monogram.png"
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/limitless-monogram.png`}
             alt="Limitless Grit Logo"
             width={68}
             height={68}
