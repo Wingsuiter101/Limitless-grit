@@ -11,7 +11,6 @@ const navItems = [
   { name: 'Home', href: '/' },
   { name: 'Services', href: '/services' },
   { name: 'About', href: '/about' },
-  { name: 'Case Studies', href: '/case-studies' },
   { name: 'Contact', href: '/contact' },
 ]
 
@@ -42,7 +41,7 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-10 md:space-x-12">
+            <div className="ml-10 flex items-baseline space-x-12 md:space-x-16">
               {navItems.map((item) => (
                 <Link
                   key={item.name}

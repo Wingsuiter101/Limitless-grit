@@ -1,13 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import PricingSection from '@/components/PricingSection'
+import Footer from '@/components/Footer'
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-white pt-24">
+    <main className="min-h-screen bg-white pt-20">
       {/* Hero */}
-      <section className="relative min-h-[70vh] bg-gray-50 flex items-center justify-center px-6 overflow-hidden">
+      <section className="relative py-36 pb-48 bg-gray-50 px-6 overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 left-20 w-32 h-32 bg-primary rounded-full"></div>
@@ -21,7 +21,7 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary-dark mb-6 leading-tight">
+            <h1 className="text-6xl md:text-7xl font-bold text-primary-dark mb-6">
               Let's <span className="font-inria italic text-primary">Connect</span>
             </h1>
           </motion.div>
@@ -30,20 +30,17 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto"
           >
             Tell us about your project and goals. We'll get back within 24 hours with the best next step.
           </motion.p>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="py-20">
-        <PricingSection />
-      </section>
+      {/* Pricing Section removed per request */}
 
       {/* Get In Touch cards */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-36 pb-48 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-dark text-center mb-12">
             Get In <span className="font-inria italic text-primary">Touch</span>
@@ -92,7 +89,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form */}
-      <section className="py-20 px-6 bg-gray-50">
+      <section className="py-36 pb-48 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark">
@@ -150,6 +147,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <Footer />
     </main>
   )
 }
