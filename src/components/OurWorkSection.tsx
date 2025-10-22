@@ -1,6 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useEffect, useMemo, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import AIToolsSection from './AIToolsSection'
 
 const videos = [
   {
@@ -31,8 +33,52 @@ const videos = [
 ]
 
 export default function OurWorkSection() {
+  const shorts = [
+    { id: 'ZZgX3-Ep9YY', title: 'Short 1' },
+    { id: 't58yCZzzfOc', title: 'Short 2' },
+    { id: '9LPIIrAS3G', title: 'Short 3' },
+    { id: 'M8ioFOt5R4k', title: 'Short 4' }
+  ]
+
+  const longFormVideos = [
+    { id: 'o7Asyo9s2_M', title: 'The Truth About Hard Work' },
+    { id: 'Dou3EjQBpuM', title: 'Navigating Your 20s' },
+    { id: 'XvtuW0UN4aA', title: 'The Power of Story' },
+    { id: 'jnbxMCmpyj8', title: 'Embracing Change' }
+  ]
+
+  const [activeIndex, setActiveIndex] = useState(0)
+  const ordered = useMemo(() => {
+    return shorts.map((item, idx) => ({
+      ...item,
+      rel: (idx - activeIndex + shorts.length) % shorts.length
+    }))
+  }, [activeIndex])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % shorts.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const [longFormActiveIndex, setLongFormActiveIndex] = useState(0)
+  const longFormOrdered = useMemo(() => {
+    return longFormVideos.map((item, idx) => ({
+      ...item,
+      rel: (idx - longFormActiveIndex + longFormVideos.length) % longFormVideos.length
+    }))
+  }, [longFormActiveIndex])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLongFormActiveIndex((prev) => (prev + 1) % longFormVideos.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <section className="pt-32 pb-0 bg-white">
+    <section className="pt-16 pb-0 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -50,92 +96,189 @@ export default function OurWorkSection() {
           </p>
         </motion.div>
 
-        {/* Shorts Row */}
-        <section className="mt-12">
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            viewport={{ once: true }}
-            className="text-xl md:text-2xl font-semibold text-primary-dark mb-12 text-center"
-          >
-            Shorts
-          </motion.h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {videos
-              .filter((v) => v.kind === 'Short')
-              .slice(0, 3)
-              .map((video, index) => (
-                <motion.div
-                  key={`short-${index}`}
+        {/* Shorts Row - Simple two-column layout */}
+        <section className="mt-12 mb-24 pt-24">
+          <div className="grid lg:grid-cols-2 items-center">
+            <div className="flex flex-col items-center lg:items-end">
+              <div className="space-y-4 text-center lg:text-left">
+                <motion.h3
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  className="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-200 ease-out hover:scale-[1.02] will-change-transform"
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  viewport={{ once: true }}
+                  className="text-[15vw] leading-none md:text-[12rem] font-inria italic font-medium tracking-tight text-primary-dark select-none"
                 >
-                  <div className={`${video.aspectClass} w-full relative`}>
-                    <iframe
-                      className="w-full h-full"
-                      src={video.embedUrl}
-                      title={`Short ${index + 1}`}
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
+                  <span className="text-primary">S</span>horts
+                </motion.h3>
+
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={activeIndex}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35 }}
+                    className="text-lg md:text-2xl font-semibold text-gray-800"
+                  >
+                    {shorts[activeIndex]?.title}
+                  </motion.p>
+                </AnimatePresence>
+
+                <div className="flex items-center justify-center lg:justify-start gap-3">
+                  {shorts.map((_, idx) => (
+                    <button
+                      key={idx}
+                      aria-label={`Go to short ${idx + 1}`}
+                      onClick={() => setActiveIndex(idx)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        idx === activeIndex ? 'bg-primary w-8' : 'bg-gray-300 w-3.5'
+                      }`}
                     />
-                    <div className="pointer-events-none absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/10 transition-colors duration-200 ease-out"></div>
-                  </div>
-                  <div className="px-2 py-3 text-center">
-                    <p className="text-sm text-gray-600 font-medium">Short {index + 1}</p>
-                  </div>
-                </motion.div>
-              ))}
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="relative h-[480px] md:h-[560px] flex items-center justify-center">
+              <div className="relative w-[240px] sm:w-[280px] md:w-[320px] aspect-[9/16]">
+                {ordered
+                  .filter((item) => item.rel < 3) // Render active and next 2 cards
+                  .map((item) => {
+                    const isActive = item.rel === 0
+                    return (
+                      <motion.div
+                        key={item.id}
+                        className="absolute inset-0 w-full h-full rounded-2xl overflow-hidden shadow-2xl bg-gray-800"
+                        style={{ zIndex: 10 - item.rel }}
+                        initial={{ y: 20, scale: 0.9, opacity: 0 }}
+                        animate={{
+                          x: item.rel * 8,
+                          y: item.rel * 16,
+                          scale: 1 - item.rel * 0.05,
+                          rotate: 2 + item.rel * 1.5,
+                          opacity: 1 - item.rel * 0.2,
+                        }}
+                        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+                      >
+                        {isActive ? (
+                          <iframe
+                            className="w-full h-full"
+                            src={`https://www.youtube.com/embed/${shorts[activeIndex].id}?modestbranding=1&rel=0&controls=1`}
+                            title={`YouTube Short ${activeIndex + 1}`}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                          />
+                        ) : (
+                          <iframe
+                            className="w-full h-full"
+                            src={`https://www.youtube.com/embed/${item.id}?modestbranding=1&rel=0&controls=1`}
+                            title={`YouTube Short ${item.rel + 1}`}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                          />
+                        )}
+                      </motion.div>
+                    )
+                  })}
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Long-Form Row */}
-        <section className="mt-24 pt-16 border-t border-gray-200">
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            viewport={{ once: true }}
-            className="text-xl md:text-2xl font-semibold text-primary-dark mb-12 text-center"
-          >
-            Long-Form
-          </motion.h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {videos
-              .filter((v) => v.kind === 'Long-Form')
-              .slice(0, 2)
-              .map((video, index) => (
-                <motion.div
-                  key={`long-${index}`}
+      </div>
+
+      {/* Long Form Row */}
+      <section className="mt-24 pt-24 pb-48 bg-gradient-to-b from-white to-gray-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 items-center gap-0 lg:gap-24">
+            <div className="flex flex-col items-center lg:items-start">
+              <div className="space-y-4 text-center lg:text-left">
+                <motion.h3
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  className="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-200 ease-out hover:scale-[1.02] will-change-transform"
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  viewport={{ once: true }}
+                  className="text-[15vw] leading-none md:text-[12rem] font-inria italic font-medium tracking-tight text-primary-dark select-none"
                 >
-                  <div className={`${video.aspectClass} w-full relative`}>
-                    <iframe
-                      className="w-full h-full"
-                      src={video.embedUrl}
-                      title={`Long-Form ${index + 1}`}
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/10 transition-colors duration-200 ease-out"></div>
-                  </div>
-                  <div className="px-2 py-3 text-center">
-                    <p className="text-sm text-gray-600 font-medium">Episode {index + 1}</p>
-                  </div>
-                </motion.div>
-              ))}
-          </div>
-        </section>
+                  <span className="text-primary">L</span>ong Form
+                </motion.h3>
 
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={longFormActiveIndex}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35 }}
+                    className="text-lg md:text-2xl font-semibold text-gray-800"
+                  >
+                    {longFormVideos[longFormActiveIndex]?.title}
+                  </motion.p>
+                </AnimatePresence>
+
+                <div className="flex items-center justify-center lg:justify-start gap-3">
+                  {longFormVideos.map((_, idx) => (
+                    <button
+                      key={idx}
+                      aria-label={`Go to video ${idx + 1}`}
+                      onClick={() => setLongFormActiveIndex(idx)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        idx === longFormActiveIndex ? 'bg-primary w-8' : 'bg-gray-300 w-3.5'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:order-first relative h-[320px] md:h-[480px] flex items-center justify-center lg:justify-end mt-4 lg:mt-0">
+              <div className="relative w-full max-w-lg aspect-video">
+                {longFormOrdered
+                  .filter((item) => item.rel < 3)
+                  .map((item) => {
+                    const isActive = item.rel === 0
+                    return (
+                      <motion.div
+                        key={item.id}
+                        className="absolute inset-0 w-full h-full rounded-2xl overflow-hidden shadow-2xl bg-gray-800"
+                        style={{ zIndex: 10 - item.rel }}
+                        initial={{ y: 20, scale: 0.9, opacity: 0 }}
+                        animate={{
+                          x: item.rel * -10,
+                          y: item.rel * 10,
+                          scale: 1 - item.rel * 0.05,
+                          rotate: -2 - item.rel,
+                          opacity: 1 - item.rel * 0.2,
+                        }}
+                        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+                      >
+                        {isActive ? (
+                          <iframe
+                            className="w-full h-full"
+                            src={`https://www.youtube.com/embed/${item.id}?modestbranding=1&rel=0&controls=1`}
+                            title={`YouTube Video ${longFormActiveIndex + 1}`}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                          />
+                        ) : (
+                          <img
+                            src={`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`}
+                            alt="Upcoming video preview"
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                      </motion.div>
+                    )
+                  })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Tools Section */}
+      <div className="pt-24">
+        <AIToolsSection />
       </div>
 
       {/* CTA Banner - Full width, flush to footer */}
@@ -146,18 +289,18 @@ export default function OurWorkSection() {
         viewport={{ once: true }}
         className="mt-24"
       >
-        <div className="bg-gradient-to-r from-primary to-secondary p-16 md:p-20 text-white">
+        <div className="bg-gradient-to-r from-neutral-700 to-neutral-800 p-16 md:p-20 text-white">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-              <div className="text-left">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-center md:text-left">
+              <div className="flex-1">
                 <h4 className="text-xl md:text-3xl lg:text-4xl font-bold tracking-[0.01em] mb-2">
-                  Ready to create standout <span className="font-inria italic">content?</span>
+                  Ready to create standout <span className="font-inria italic text-primary">content?</span>
                 </h4>
                 <p className="text-base md:text-lg opacity-90">
                   Let’s turn your ideas into memorable episodes and scroll-stopping shorts.
                 </p>
               </div>
-              <a href="/contact" className="inline-block bg-white text-primary hover:bg-gray-50 px-10 md:px-12 py-5 rounded-full font-semibold text-lg md:text-xl transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap">
+              <a href="/contact" className="inline-block bg-white text-primary hover:bg-gray-50 px-10 md:px-12 py-5 rounded-full font-semibold text-lg md:text-xl transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap mt-6 md:mt-0">
                 Start Your Project
               </a>
             </div>

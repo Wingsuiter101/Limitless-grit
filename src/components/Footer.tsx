@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react'
+import { Linkedin } from 'lucide-react'
 
 const pageLinks = [
   { name: 'Home', href: '/' },
@@ -19,9 +19,6 @@ const legalLinks = [
 
 const socialLinks = [
   { name: 'LinkedIn', icon: Linkedin, href: '#' },
-  { name: 'Twitter', icon: Twitter, href: '#' },
-  { name: 'Instagram', icon: Instagram, href: '#' },
-  { name: 'YouTube', icon: Youtube, href: '#' },
 ]
 
 export default function Footer() {
@@ -50,9 +47,15 @@ export default function Footer() {
                     sizes="(max-width: 768px) 80px, 40px"
                   />
                 </div>
-                <span className="text-3xl md:text-2xl font-bold">
-                  Limitless <span className="font-inria italic text-primary">Grit</span>
-                </span>
+                <div className="relative w-40 h-8 md:w-32 md:h-6">
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/limitless-logo-text.png`}
+                    alt="Limitless Grit"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 160px, 128px"
+                  />
+                </div>
               </Link>
               <p className="text-gray-300 leading-relaxed text-center md:text-left mt-1 max-w-[22rem] md:max-w-none mx-auto md:mx-0">
                 Simplifying content creation for visionary leaders and brands.
@@ -70,9 +73,6 @@ export default function Footer() {
               <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Contact</h4>
               <a href="mailto:hello@limitlessgrit.com" className="block text-gray-300 hover:text-primary transition-colors">
                 hello@limitlessgrit.com
-              </a>
-              <a href="tel:+1234567890" className="block text-gray-300 hover:text-primary transition-colors">
-                +1 (234) 567-8900
               </a>
               <p className="text-gray-300">New York, NY</p>
             </motion.div>
@@ -133,7 +133,7 @@ export default function Footer() {
             className="border-t border-white/10 pt-8"
           >
             <div className="flex flex-col md:flex-row items-center gap-6 justify-center md:justify-between">
-              <div className="grid grid-cols-4 sm:grid-cols-6 gap-3 justify-items-center md:flex md:space-x-4 md:justify-start">
+              <div className="flex space-x-4">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
@@ -150,41 +150,6 @@ export default function Footer() {
           </motion.div>
         </div>
       </div>
-
-      {/* Newsletter Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="border-t border-white/10 py-12 px-6"
-      >
-        <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-8 items-center text-center lg:text-left">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                Stay ahead of the{' '}
-                <span className="font-inria italic text-primary">curve</span>
-              </h3>
-              <p className="text-gray-300 text-lg">
-                Get the latest insights on brand building, content strategy, 
-                and growth tactics delivered to your inbox.
-              </p>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-4 bg-white/10 border border-white/20 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-primary transition-colors"
-              />
-              <button className="bg-primary hover:bg-primary/90 px-8 py-4 rounded-full font-semibold transition-all duration-300 whitespace-nowrap">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
-      </motion.div>
 
       {/* Bottom Bar */}
       <motion.div

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Rocket } from 'lucide-react'
+import Image from 'next/image'
 import Footer from '@/components/Footer'
 
 const teamMembers = [
@@ -74,8 +74,7 @@ export default function AboutPage() {
               About <span className="font-inria italic text-primary">Us</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto">
-              We're a creative-first agency shaped by content, technology, and a relentless drive 
-              to build meaningful stories that resonate and inspire.
+              We are a creative-first agency powered by AI, technology, and storytelling that connects, resonates, and inspires action.
             </p>
           </motion.div>
         </div>
@@ -99,24 +98,15 @@ export default function AboutPage() {
                 
                 <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
                   <p>
-                    <strong className="text-primary-dark">Limitless Grit</strong> began as something 
-                    simple yet powerful - a podcast exploring the intersection of creativity, technology, 
-                    and storytelling. What started as conversations about meaningful content creation 
-                    naturally evolved into something much bigger.
+                    <strong className="text-primary-dark">Limitless Grit</strong> began with a simple yet powerful focus: exploring the intersection of creativity and technology. What started as conversations about meaningful content creation naturally evolved into a creative-first agency powered by AI, technology, and storytelling.
                   </p>
                   
                   <p>
-                    Founded by <strong className="text-primary-dark">Shristi</strong> and <strong className="text-primary-dark">Jugal</strong>, 
-                    our journey from podcast to full-service creative agency has been driven by one core belief: 
-                    that every brand has a unique story worth telling, and technology should amplify, not replace, 
-                    human creativity.
+                    Founded by <strong className="text-primary-dark">Shristi</strong> and <strong className="text-primary-dark">Jugal</strong>, our journey has been driven by one core belief: that every brand has a unique story worth telling, and technology should amplify, not replace, human creativity to craft narratives that connect, resonate, and inspire action.
                   </p>
                   
                   <p>
-                    Today, we're a focused studio specializing in video editing, branding, AI-integrated 
-                    creative services, and web development. We collaborate with founders, creators, and 
-                    early-stage teams to develop high-quality, high-impact content that moves fast without 
-                    losing clarity or soul.
+                    Today, we're a focused studio specializing in video editing, branding, AI-integrated creative services, and web development. We collaborate with founders, creators, and early-stage teams to develop high-quality, high-impact content that moves fast without losing clarity or soul.
                   </p>
                 </div>
               </div>
@@ -129,16 +119,14 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="aspect-[4/5] bg-gradient-to-br from-primary/20 to-secondary/20 rounded-3xl overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg">
-                      <Rocket className="w-8 h-8 text-primary" />
-                    </div>
-                    <p className="text-gray-600 font-medium">From Podcast to Agency</p>
-                  </div>
-                </div>
+              <div className="relative aspect-[4/5]  rounded-3xl overflow-hidden shadow-lg">
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/about-us.jpg`}
+                  alt="Limitless Grit Team"
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 hover:scale-105"
+                />
               </div>
             </motion.div>
           </div>
