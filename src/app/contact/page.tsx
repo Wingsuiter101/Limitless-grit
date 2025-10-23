@@ -7,13 +7,16 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-white pt-20">
       {/* Hero */}
-      <section className="relative py-36 pb-48 bg-gray-50 px-6 overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-20 w-32 h-32 bg-primary rounded-full"></div>
-          <div className="absolute bottom-32 right-32 w-24 h-24 bg-secondary rounded-full"></div>
-          <div className="absolute top-1/2 left-1/3 w-16 h-16 bg-secondary-light rounded-full"></div>
-        </div>
+      <section className="relative h-[70vh] flex items-center justify-center px-6 overflow-hidden">
+        <video
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/contact-loop.mp4`}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/40 via-white/60 to-white" />
 
         <div className="max-w-6xl mx-auto text-center relative z-10">
           <motion.div
@@ -40,9 +43,9 @@ export default function ContactPage() {
       {/* Pricing Section removed per request */}
 
       {/* Get In Touch cards */}
-      <section className="py-36 pb-48 px-6 bg-white">
+      <section className="py-24 pb-32 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-dark text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-primary-dark text-center mb-12">
             Get In <span className="font-inria italic text-primary">Touch</span>
           </h2>
           <div className="space-y-6">

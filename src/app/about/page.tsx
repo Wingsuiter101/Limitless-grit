@@ -63,8 +63,18 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-white pt-20">
       {/* Hero Section */}
-      <section className="py-36 pb-48 px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto text-center">
+      <section className="relative h-[70vh] flex items-center justify-center px-6 overflow-hidden">
+        <video
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/about-loop.mp4`}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/40 via-white/60 to-white" />
+
+        <div className="max-w-6xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -81,7 +91,7 @@ export default function AboutPage() {
       </section>
 
       {/* Company Story */}
-      <section className="py-36 pb-48 px-6">
+      <section className="py-24 pb-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -92,7 +102,7 @@ export default function AboutPage() {
               className="space-y-8"
             >
               <div>
-                <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-6">
+                <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-6 text-center md:text-left">
                   Our <span className="font-inria italic text-primary">Story</span>
                 </h2>
                 
@@ -152,10 +162,10 @@ export default function AboutPage() {
           </motion.div>
 
           <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-primary/20 hidden md:block"></div>
+            {/* Timeline line - Mobile: left side, Desktop: center */}
+            <div className="absolute left-8 md:left-1/2 md:transform md:-translate-x-1/2 w-0.5 md:w-1 h-full bg-primary/20"></div>
             
-            <div className="space-y-12">
+            <div className="space-y-8 md:space-y-12">
               {milestones.map((milestone, index) => (
                 <motion.div
                   key={milestone.year}
@@ -167,22 +177,23 @@ export default function AboutPage() {
                     index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                   }`}
                 >
-                  <div className={`flex-1 ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'}`}>
+                  {/* Mobile & Desktop Layout */}
+                  <div className={`flex-1 ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'} pl-16 md:pl-0`}>
                     <div className="bg-white rounded-2xl p-6 shadow-lg">
-                      <div className="flex items-center mb-4">
-                        <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mr-4">
-                          <span className="text-white font-bold text-lg">{milestone.year}</span>
+                      <div className="flex flex-col sm:flex-row sm:items-center mb-4 gap-3">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 bg-primary rounded-full flex items-center justify-center sm:mr-4 shrink-0">
+                          <span className="text-white font-bold text-base sm:text-lg">{milestone.year}</span>
                         </div>
-                        <h3 className="text-xl font-bold text-primary-dark">{milestone.title}</h3>
+                        <h3 className="text-lg sm:text-xl font-bold text-primary-dark">{milestone.title}</h3>
                       </div>
-                      <p className="text-gray-600">{milestone.description}</p>
+                      <p className="text-gray-600 text-sm sm:text-base">{milestone.description}</p>
                     </div>
                   </div>
                   
-                  {/* Timeline dot */}
-                  <div className="hidden md:block w-4 h-4 bg-primary rounded-full relative z-10"></div>
+                  {/* Timeline dot - Mobile: left side, Desktop: center */}
+                  <div className="absolute left-8 transform -translate-x-1/2 w-3 h-3 md:w-4 md:h-4 bg-primary rounded-full md:relative md:left-auto md:transform-none z-10"></div>
                   
-                  <div className="flex-1"></div>
+                  <div className="flex-1 hidden md:block"></div>
                 </motion.div>
               ))}
             </div>

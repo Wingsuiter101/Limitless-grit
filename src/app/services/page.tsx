@@ -163,7 +163,7 @@ export default function ServicesPage() {
 				</div>
 			</section>
 
-			{/* CTA Section */}
+			{/* CTA Section - Full width, no outer spacing */}
 			<motion.section
 				initial={{ opacity: 0, y: 30 }}
 				whileInView={{ opacity: 1, y: 0 }}
@@ -171,23 +171,18 @@ export default function ServicesPage() {
 				viewport={{ once: true }}
 			>
 				<div className="bg-gradient-to-r from-primary to-secondary p-16 md:p-20 text-white">
-					<div className="max-w-7xl mx-auto px-6">
-						<div className="flex flex-col md:flex-row items-center justify-center gap-8">
-							<div className="text-left">
-								<h2 className="text-xl md:text-3xl lg:text-4xl font-bold tracking-[0.01em] mb-2">
-									Ready to elevate your <span className="font-inria italic">content?</span>
-								</h2>
-								<p className="text-base md:text-lg opacity-90">
-									Let's discuss how our services can help simplify your content creation 
-									and amplify your brand's digital presence.
-								</p>
-							</div>
-							<Link href="/contact">
-								<button className="inline-block bg-white text-primary hover:bg-gray-50 px-10 md:px-12 py-5 rounded-full font-semibold text-lg md:text-xl transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap">
-									Start Your Project
-								</button>
-							</Link>
-						</div>
+					<div className="max-w-7xl mx-auto px-6 text-center">
+						<h2 className="text-4xl md:text-5xl font-bold mb-6">
+							Ready to elevate your <span className="font-inria italic">content?</span>
+						</h2>
+						<p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
+							Let's discuss how our services can amplify your brand's digital presence.
+						</p>
+						<Link href="/contact">
+							<button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+								Start Your Project
+							</button>
+						</Link>
 					</div>
 				</div>
 			</motion.section>
