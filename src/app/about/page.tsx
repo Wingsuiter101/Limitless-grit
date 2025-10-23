@@ -60,12 +60,13 @@ const milestones = [
 ]
 
 export default function AboutPage() {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
   return (
-    <main className="min-h-screen bg-white pt-20">
+    <main className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative h-[70vh] flex items-center justify-center px-6 overflow-hidden">
         <video
-          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/about-loop.mp4`}
+          src={`${basePath}/about-loop.mp4`}
           className="absolute inset-0 w-full h-full object-cover"
           autoPlay
           muted

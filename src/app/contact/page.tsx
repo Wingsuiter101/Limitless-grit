@@ -4,12 +4,13 @@ import { motion } from 'framer-motion'
 import Footer from '@/components/Footer'
 
 export default function ContactPage() {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
   return (
-    <main className="min-h-screen bg-white pt-20">
-      {/* Hero */}
+    <main className="min-h-screen bg-white">
+      {/* Hero Section */}
       <section className="relative h-[70vh] flex items-center justify-center px-6 overflow-hidden">
         <video
-          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/contact-loop.mp4`}
+          src={`${basePath}/contact-loop.mp4`}
           className="absolute inset-0 w-full h-full object-cover"
           autoPlay
           muted
@@ -27,16 +28,10 @@ export default function ContactPage() {
             <h1 className="text-6xl md:text-7xl font-bold text-primary-dark mb-6">
               Let's <span className="font-inria italic text-primary">Connect</span>
             </h1>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto">
+              Tell us about your project and goals. We'll get back within 24 hours with the best next step.
+            </p>
           </motion.div>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto"
-          >
-            Tell us about your project and goals. We'll get back within 24 hours with the best next step.
-          </motion.p>
         </div>
       </section>
 
