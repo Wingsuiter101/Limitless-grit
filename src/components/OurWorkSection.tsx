@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, useRef } from 'react'
 import { motion, AnimatePresence, PanInfo } from 'framer-motion'
+import Link from 'next/link'
 import AIToolsSection from './AIToolsSection'
 
 const videos = [
@@ -34,21 +35,22 @@ const videos = [
 
 export default function OurWorkSection() {
   const shorts = [
-    { id: 'ZZgX3-Ep9YY', title: 'Short 1' },
-    { id: 't58yCZzzfOc', title: 'Short 2' },
-    { id: '9LPIIrAS3G', title: 'Short 3' },
-    { id: 'M8ioFOt5R4k', title: 'Short 4' }
+    { id: 'ZZgX3-Ep9YY', title: 'Pareto Principle - Jay Papasan' },
+    { id: 't58yCZzzfOc', title: 'AI Writing - Steve Yegge' },
+    { id: 'ojSA_KCf17A', title: 'Side Hustle - Sundas Khalid' },
+    { id: 'M8ioFOt5R4k', title: 'No Shortcuts - Ani Sanyal' }
   ]
 
   const longFormVideos = [
-    { id: 'o7Asyo9s2_M', title: 'The Truth About Hard Work' },
-    { id: 'Dou3EjQBpuM', title: 'Navigating Your 20s' },
-    { id: 'XvtuW0UN4aA', title: 'The Power of Story' },
-    { id: 'jnbxMCmpyj8', title: 'Embracing Change' }
+    { id: 'o7Asyo9s2_M', title: 'Gergely Orosz - A Life Engineered' },
+    { id: 'Dou3EjQBpuM', title: 'Jay Papasan - Limitless Grit' },
+    { id: 'XvtuW0UN4aA', title: 'Sundas Khalid - A Life Engineered' },
+    { id: '8PkIXuPm-Fo', title: 'Bill Simmons - MadTech Momentum' }
   ]
 
   const [activeIndex, setActiveIndex] = useState(0)
   const [isDraggingShorts, setIsDraggingShorts] = useState(false)
+  const [isInteractingShorts, setIsInteractingShorts] = useState(false)
   const shortsAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
   
   const ordered = useMemo(() => {
@@ -66,10 +68,10 @@ export default function OurWorkSection() {
       }
       shortsAutoPlayRef.current = setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % shorts.length)
-      }, 5000)
+      }, 10000) // Increased from 5000ms to 10000ms
     }
 
-    if (!isDraggingShorts) {
+    if (!isDraggingShorts && !isInteractingShorts) {
       startAutoPlay()
     }
 
@@ -78,7 +80,7 @@ export default function OurWorkSection() {
         clearInterval(shortsAutoPlayRef.current)
       }
     }
-  }, [isDraggingShorts])
+  }, [isDraggingShorts, isInteractingShorts])
 
   const handleShortsDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const swipeThreshold = 50
@@ -96,6 +98,7 @@ export default function OurWorkSection() {
 
   const [longFormActiveIndex, setLongFormActiveIndex] = useState(0)
   const [isDraggingLongForm, setIsDraggingLongForm] = useState(false)
+  const [isInteractingLongForm, setIsInteractingLongForm] = useState(false)
   const longFormAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
   
   const longFormOrdered = useMemo(() => {
@@ -113,10 +116,10 @@ export default function OurWorkSection() {
       }
       longFormAutoPlayRef.current = setInterval(() => {
         setLongFormActiveIndex((prev) => (prev + 1) % longFormVideos.length)
-      }, 5000)
+      }, 10000) // Increased from 5000ms to 10000ms
     }
 
-    if (!isDraggingLongForm) {
+    if (!isDraggingLongForm && !isInteractingLongForm) {
       startAutoPlay()
     }
 
@@ -125,7 +128,7 @@ export default function OurWorkSection() {
         clearInterval(longFormAutoPlayRef.current)
       }
     }
-  }, [isDraggingLongForm])
+  }, [isDraggingLongForm, isInteractingLongForm])
 
   const handleLongFormDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const swipeThreshold = 50
@@ -211,6 +214,8 @@ export default function OurWorkSection() {
                 dragElastic={0.2}
                 onDragStart={() => setIsDraggingShorts(true)}
                 onDragEnd={handleShortsDragEnd}
+                onMouseEnter={() => setIsInteractingShorts(true)}
+                onMouseLeave={() => setIsInteractingShorts(false)}
                 whileTap={{ cursor: "grabbing" }}
               >
                 {/* Drag handle overlay */}
@@ -326,6 +331,8 @@ export default function OurWorkSection() {
                 dragElastic={0.2}
                 onDragStart={() => setIsDraggingLongForm(true)}
                 onDragEnd={handleLongFormDragEnd}
+                onMouseEnter={() => setIsInteractingLongForm(true)}
+                onMouseLeave={() => setIsInteractingLongForm(false)}
                 whileTap={{ cursor: "grabbing" }}
               >
                 {/* Drag handle overlay */}
@@ -405,11 +412,13 @@ export default function OurWorkSection() {
               Ready to create standout <span className="font-inria italic text-primary">content?</span>
             </h2>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              Let’s turn ideas into standout episodes and scroll-stopping shorts.
+              Let's turn ideas into standout episodes and scroll-stopping shorts.
             </p>
-            <a href="/contact" className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
-              Start Your Project
-            </a>
+            <Link href="/contact">
+              <button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+                Start Your Project
+              </button>
+            </Link>
           </div>
         </div>
       </motion.div>
