@@ -13,8 +13,8 @@ const pageLinks = [
 ]
 
 const legalLinks = [
-  'Privacy Policy',
-  'Terms of Service',
+  { name: 'Privacy Policy', href: '/privacy' },
+  { name: 'Terms of Service', href: '/terms' },
 ]
 
 const socialLinks = [
@@ -111,13 +111,13 @@ export default function Footer() {
               <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Legal</h4>
               <ul className="space-y-2">
                 {legalLinks.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
                       className="text-gray-300 hover:text-primary hover:underline underline-offset-4 transition-colors duration-300 text-sm"
                     >
-                      {link}
-                    </a>
+                      {link.name}
+                    </Link>
                   </li>
                 ))}
               </ul>

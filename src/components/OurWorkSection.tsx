@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useMemo, useState, useRef } from 'react'
+import { motion, AnimatePresence, PanInfo } from 'framer-motion'
 import AIToolsSection from './AIToolsSection'
 
 const videos = [
@@ -48,6 +48,9 @@ export default function OurWorkSection() {
   ]
 
   const [activeIndex, setActiveIndex] = useState(0)
+  const [isDraggingShorts, setIsDraggingShorts] = useState(false)
+  const shortsAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
+  
   const ordered = useMemo(() => {
     return shorts.map((item, idx) => ({
       ...item,
@@ -55,14 +58,46 @@ export default function OurWorkSection() {
     }))
   }, [activeIndex])
 
+  // Auto-play for shorts
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % shorts.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
+    const startAutoPlay = () => {
+      if (shortsAutoPlayRef.current) {
+        clearInterval(shortsAutoPlayRef.current)
+      }
+      shortsAutoPlayRef.current = setInterval(() => {
+        setActiveIndex((prev) => (prev + 1) % shorts.length)
+      }, 5000)
+    }
+
+    if (!isDraggingShorts) {
+      startAutoPlay()
+    }
+
+    return () => {
+      if (shortsAutoPlayRef.current) {
+        clearInterval(shortsAutoPlayRef.current)
+      }
+    }
+  }, [isDraggingShorts])
+
+  const handleShortsDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    const swipeThreshold = 50
+    if (Math.abs(info.offset.x) > swipeThreshold) {
+      if (info.offset.x > 0) {
+        // Swiped right - go to previous
+        setActiveIndex((prev) => (prev - 1 + shorts.length) % shorts.length)
+      } else {
+        // Swiped left - go to next
+        setActiveIndex((prev) => (prev + 1) % shorts.length)
+      }
+    }
+    setIsDraggingShorts(false)
+  }
 
   const [longFormActiveIndex, setLongFormActiveIndex] = useState(0)
+  const [isDraggingLongForm, setIsDraggingLongForm] = useState(false)
+  const longFormAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
+  
   const longFormOrdered = useMemo(() => {
     return longFormVideos.map((item, idx) => ({
       ...item,
@@ -70,12 +105,41 @@ export default function OurWorkSection() {
     }))
   }, [longFormActiveIndex])
 
+  // Auto-play for long form
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLongFormActiveIndex((prev) => (prev + 1) % longFormVideos.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
+    const startAutoPlay = () => {
+      if (longFormAutoPlayRef.current) {
+        clearInterval(longFormAutoPlayRef.current)
+      }
+      longFormAutoPlayRef.current = setInterval(() => {
+        setLongFormActiveIndex((prev) => (prev + 1) % longFormVideos.length)
+      }, 5000)
+    }
+
+    if (!isDraggingLongForm) {
+      startAutoPlay()
+    }
+
+    return () => {
+      if (longFormAutoPlayRef.current) {
+        clearInterval(longFormAutoPlayRef.current)
+      }
+    }
+  }, [isDraggingLongForm])
+
+  const handleLongFormDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    const swipeThreshold = 50
+    if (Math.abs(info.offset.x) > swipeThreshold) {
+      if (info.offset.x > 0) {
+        // Swiped right - go to previous
+        setLongFormActiveIndex((prev) => (prev - 1 + longFormVideos.length) % longFormVideos.length)
+      } else {
+        // Swiped left - go to next
+        setLongFormActiveIndex((prev) => (prev + 1) % longFormVideos.length)
+      }
+    }
+    setIsDraggingLongForm(false)
+  }
 
   return (
     <section className="pt-16 pb-0 bg-white">
@@ -139,8 +203,28 @@ export default function OurWorkSection() {
               </div>
             </div>
 
-            <div className="relative h-[480px] md:h-[560px] flex items-center justify-center">
-              <div className="relative w-[240px] sm:w-[280px] md:w-[320px] aspect-[9/16]">
+            <div className="relative h-[480px] md:h-[560px] flex items-center justify-center touch-pan-y">
+              <motion.div 
+                className="relative w-[240px] sm:w-[280px] md:w-[320px] aspect-[9/16]"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragStart={() => setIsDraggingShorts(true)}
+                onDragEnd={handleShortsDragEnd}
+                whileTap={{ cursor: "grabbing" }}
+              >
+                {/* Drag handle overlay */}
+                <div 
+                  className="absolute inset-x-0 top-0 bottom-0 z-50 cursor-grab active:cursor-grabbing"
+                  style={{ 
+                    pointerEvents: isDraggingShorts ? 'auto' : 'none',
+                    touchAction: 'pan-y'
+                  }}
+                />
+                
+                {/* Drag handles on edges */}
+                <div className="absolute left-0 top-0 bottom-0 w-12 z-40 cursor-grab active:cursor-grabbing" />
+                <div className="absolute right-0 top-0 bottom-0 w-12 z-40 cursor-grab active:cursor-grabbing" />
                 {ordered
                   .filter((item) => item.rel < 3) // Render active and next 2 cards
                   .map((item) => {
@@ -149,7 +233,10 @@ export default function OurWorkSection() {
                       <motion.div
                         key={item.id}
                         className="absolute inset-0 w-full h-full rounded-2xl overflow-hidden shadow-2xl bg-gray-800"
-                        style={{ zIndex: 10 - item.rel }}
+                        style={{ 
+                          zIndex: 10 - item.rel,
+                          pointerEvents: isDraggingShorts ? 'none' : 'auto'
+                        }}
                         initial={{ y: 20, scale: 0.9, opacity: 0 }}
                         animate={{
                           x: item.rel * 8,
@@ -180,7 +267,7 @@ export default function OurWorkSection() {
                       </motion.div>
                     )
                   })}
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -231,8 +318,28 @@ export default function OurWorkSection() {
               </div>
             </div>
 
-            <div className="lg:order-first relative h-[320px] md:h-[480px] flex items-center justify-center lg:justify-end mt-4 lg:mt-0">
-              <div className="relative w-full max-w-lg aspect-video">
+            <div className="lg:order-first relative h-[320px] md:h-[480px] flex items-center justify-center lg:justify-end mt-4 lg:mt-0 touch-pan-y">
+              <motion.div 
+                className="relative w-full max-w-lg aspect-video"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragStart={() => setIsDraggingLongForm(true)}
+                onDragEnd={handleLongFormDragEnd}
+                whileTap={{ cursor: "grabbing" }}
+              >
+                {/* Drag handle overlay */}
+                <div 
+                  className="absolute inset-x-0 top-0 bottom-0 z-50 cursor-grab active:cursor-grabbing"
+                  style={{ 
+                    pointerEvents: isDraggingLongForm ? 'auto' : 'none',
+                    touchAction: 'pan-y'
+                  }}
+                />
+                
+                {/* Drag handles on edges */}
+                <div className="absolute left-0 top-0 bottom-0 w-16 z-40 cursor-grab active:cursor-grabbing" />
+                <div className="absolute right-0 top-0 bottom-0 w-16 z-40 cursor-grab active:cursor-grabbing" />
                 {longFormOrdered
                   .filter((item) => item.rel < 3)
                   .map((item) => {
@@ -241,7 +348,10 @@ export default function OurWorkSection() {
                       <motion.div
                         key={item.id}
                         className="absolute inset-0 w-full h-full rounded-2xl overflow-hidden shadow-2xl bg-gray-800"
-                        style={{ zIndex: 10 - item.rel }}
+                        style={{ 
+                          zIndex: 10 - item.rel,
+                          pointerEvents: isDraggingLongForm ? 'none' : 'auto'
+                        }}
                         initial={{ y: 20, scale: 0.9, opacity: 0 }}
                         animate={{
                           x: item.rel * -10,
@@ -270,7 +380,7 @@ export default function OurWorkSection() {
                       </motion.div>
                     )
                   })}
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>

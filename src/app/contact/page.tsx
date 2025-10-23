@@ -38,13 +38,25 @@ export default function ContactPage() {
       {/* Pricing Section removed per request */}
 
       {/* Get In Touch cards */}
-      <section className="py-24 pb-32 px-6 bg-white">
+      <section className="pt-8 md:pt-24 pb-32 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-primary-dark text-center mb-12">
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-bold text-primary-dark text-center mb-12"
+          >
             Get In <span className="font-inria italic text-primary">Touch</span>
-          </h2>
+          </motion.h2>
           <div className="space-y-6">
-            <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow border border-gray-100"
+            >
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -55,9 +67,15 @@ export default function ContactPage() {
                   <p className="text-sm text-gray-600 mt-1">We'll get back to you within 24 hours</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow border border-gray-100"
+            >
               <a href="YOUR_CALENDLY_LINK_HERE" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3M5 11h14M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -68,7 +86,7 @@ export default function ContactPage() {
                   <p className="text-sm text-gray-600 mt-1">Find a time that works for you</p>
                 </div>
               </a>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -76,13 +94,25 @@ export default function ContactPage() {
       {/* Contact Form */}
       <section className="py-36 pb-48 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark">
               Start Your <span className="font-inria italic text-primary">Project</span>
             </h2>
             <p className="text-gray-600 mt-3">Fill out the form and we'll prepare next steps for you.</p>
-          </div>
-          <div className="bg-white rounded-2xl shadow-lg p-8 md:p-10">
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-2xl shadow-lg p-8 md:p-10"
+          >
             <form className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
@@ -129,7 +159,7 @@ export default function ContactPage() {
                 Send Project Inquiry
               </button>
             </form>
-          </div>
+          </motion.div>
         </div>
       </section>
       <Footer />
