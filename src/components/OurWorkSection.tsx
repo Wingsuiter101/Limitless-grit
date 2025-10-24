@@ -50,9 +50,37 @@ export default function OurWorkSection() {
 
   const [activeIndex, setActiveIndex] = useState(0)
   const [isDraggingShorts, setIsDraggingShorts] = useState(false)
-  const [isInteractingShorts, setIsInteractingShorts] = useState(false)
+  const [isPlayingShorts, setIsPlayingShorts] = useState(false)
   const shortsAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
-  
+
+  // YT API player instances and readiness
+  const shortsPlayerRef = useRef<any | null>(null)
+  const longFormPlayerRef = useRef<any | null>(null)
+  const shortsPlayerContainerRef = useRef<HTMLDivElement | null>(null)
+  const longFormPlayerContainerRef = useRef<HTMLDivElement | null>(null)
+  const [ytApiReady, setYtApiReady] = useState(false)
+
+  // Load YouTube IFrame API once
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const w = window as any
+    if (w.YT && w.YT.Player) {
+      setYtApiReady(true)
+      return
+    }
+    const tag = document.createElement('script')
+    tag.src = 'https://www.youtube.com/iframe_api'
+    const firstScriptTag = document.getElementsByTagName('script')[0]
+    if (firstScriptTag && firstScriptTag.parentNode) {
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    } else {
+      document.head.appendChild(tag)
+    }
+    w.onYouTubeIframeAPIReady = () => {
+      setYtApiReady(true)
+    }
+  }, [])
+
   const ordered = useMemo(() => {
     return shorts.map((item, idx) => ({
       ...item,
@@ -68,11 +96,15 @@ export default function OurWorkSection() {
       }
       shortsAutoPlayRef.current = setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % shorts.length)
-      }, 10000) // Increased from 5000ms to 10000ms
+      }, 10000)
     }
 
-    if (!isDraggingShorts && !isInteractingShorts) {
+    if (!isDraggingShorts && !isPlayingShorts) {
       startAutoPlay()
+    } else {
+      if (shortsAutoPlayRef.current) {
+        clearInterval(shortsAutoPlayRef.current)
+      }
     }
 
     return () => {
@@ -80,7 +112,7 @@ export default function OurWorkSection() {
         clearInterval(shortsAutoPlayRef.current)
       }
     }
-  }, [isDraggingShorts, isInteractingShorts])
+  }, [isDraggingShorts, isPlayingShorts])
 
   const handleShortsDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const swipeThreshold = 50
@@ -92,13 +124,15 @@ export default function OurWorkSection() {
         // Swiped left - go to next
         setActiveIndex((prev) => (prev + 1) % shorts.length)
       }
+      setIsPlayingShorts(false)
+      setIsPlayingLongForm(false)
     }
     setIsDraggingShorts(false)
   }
 
   const [longFormActiveIndex, setLongFormActiveIndex] = useState(0)
   const [isDraggingLongForm, setIsDraggingLongForm] = useState(false)
-  const [isInteractingLongForm, setIsInteractingLongForm] = useState(false)
+  const [isPlayingLongForm, setIsPlayingLongForm] = useState(false)
   const longFormAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
   
   const longFormOrdered = useMemo(() => {
@@ -108,6 +142,35 @@ export default function OurWorkSection() {
     }))
   }, [longFormActiveIndex])
 
+  // Listen for YouTube iframe messages to detect play/pause
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== 'https://www.youtube.com') return;
+
+      let data;
+      try {
+        data = JSON.parse(event.data);
+      } catch (error) {
+        return;
+      }
+
+      if (data.event === 'onStateChange' || (data.event === 'infoDelivery' && data.info)) {
+        const playerState = data.info?.playerState ?? data.info;
+
+        if (playerState === 1) { // Playing
+          setIsPlayingShorts(true);
+          setIsPlayingLongForm(true);
+        } else if ([0, 2, 5].includes(playerState)) { // Ended, Paused, Cued
+          setIsPlayingShorts(false);
+          setIsPlayingLongForm(false);
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
   // Auto-play for long form
   useEffect(() => {
     const startAutoPlay = () => {
@@ -116,11 +179,15 @@ export default function OurWorkSection() {
       }
       longFormAutoPlayRef.current = setInterval(() => {
         setLongFormActiveIndex((prev) => (prev + 1) % longFormVideos.length)
-      }, 10000) // Increased from 5000ms to 10000ms
+      }, 10000)
     }
 
-    if (!isDraggingLongForm && !isInteractingLongForm) {
+    if (!isDraggingLongForm && !isPlayingLongForm) {
       startAutoPlay()
+    } else {
+      if (longFormAutoPlayRef.current) {
+        clearInterval(longFormAutoPlayRef.current)
+      }
     }
 
     return () => {
@@ -128,7 +195,7 @@ export default function OurWorkSection() {
         clearInterval(longFormAutoPlayRef.current)
       }
     }
-  }, [isDraggingLongForm, isInteractingLongForm])
+  }, [isDraggingLongForm, isPlayingLongForm])
 
   const handleLongFormDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const swipeThreshold = 50
@@ -140,9 +207,66 @@ export default function OurWorkSection() {
         // Swiped left - go to next
         setLongFormActiveIndex((prev) => (prev + 1) % longFormVideos.length)
       }
+      setIsPlayingShorts(false)
+      setIsPlayingLongForm(false)
     }
     setIsDraggingLongForm(false)
   }
+
+  // Create/destroy Shorts player on active change
+  useEffect(() => {
+    if (!ytApiReady) return
+    const w = window as any
+    if (!shortsPlayerContainerRef.current) return
+    // destroy previous
+    if (shortsPlayerRef.current && shortsPlayerRef.current.destroy) {
+      try { shortsPlayerRef.current.destroy() } catch {}
+      shortsPlayerRef.current = null
+    }
+    shortsPlayerRef.current = new w.YT.Player(shortsPlayerContainerRef.current, {
+      videoId: shorts[activeIndex].id,
+      playerVars: { modestbranding: 1, rel: 0, controls: 1 },
+      events: {
+        onStateChange: (e: any) => {
+          const playing = e?.data === 1
+          setIsPlayingShorts(playing)
+        },
+      },
+    })
+    return () => {
+      if (shortsPlayerRef.current && shortsPlayerRef.current.destroy) {
+        try { shortsPlayerRef.current.destroy() } catch {}
+        shortsPlayerRef.current = null
+      }
+    }
+  }, [ytApiReady, activeIndex])
+
+  // Create/destroy Long Form player on active change
+  useEffect(() => {
+    if (!ytApiReady) return
+    const w = window as any
+    if (!longFormPlayerContainerRef.current) return
+    if (longFormPlayerRef.current && longFormPlayerRef.current.destroy) {
+      try { longFormPlayerRef.current.destroy() } catch {}
+      longFormPlayerRef.current = null
+    }
+    longFormPlayerRef.current = new w.YT.Player(longFormPlayerContainerRef.current, {
+      videoId: longFormVideos[longFormActiveIndex].id,
+      playerVars: { modestbranding: 1, rel: 0, controls: 1 },
+      events: {
+        onStateChange: (e: any) => {
+          const playing = e?.data === 1
+          setIsPlayingLongForm(playing)
+        },
+      },
+    })
+    return () => {
+      if (longFormPlayerRef.current && longFormPlayerRef.current.destroy) {
+        try { longFormPlayerRef.current.destroy() } catch {}
+        longFormPlayerRef.current = null
+      }
+    }
+  }, [ytApiReady, longFormActiveIndex])
 
   return (
     <section className="pt-16 pb-0 bg-white">
@@ -196,7 +320,11 @@ export default function OurWorkSection() {
                     <button
                       key={idx}
                       aria-label={`Go to short ${idx + 1}`}
-                      onClick={() => setActiveIndex(idx)}
+                      onClick={() => {
+                        setActiveIndex(idx)
+                        setIsPlayingShorts(false)
+                        setIsPlayingLongForm(false)
+                      }}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
                         idx === activeIndex ? 'bg-primary w-8' : 'bg-gray-300 w-3.5'
                       }`}
@@ -214,8 +342,6 @@ export default function OurWorkSection() {
                 dragElastic={0.2}
                 onDragStart={() => setIsDraggingShorts(true)}
                 onDragEnd={handleShortsDragEnd}
-                onMouseEnter={() => setIsInteractingShorts(true)}
-                onMouseLeave={() => setIsInteractingShorts(false)}
                 whileTap={{ cursor: "grabbing" }}
               >
                 {/* Drag handle overlay */}
@@ -253,20 +379,12 @@ export default function OurWorkSection() {
                         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
                       >
                         {isActive ? (
-                          <iframe
-                            className="w-full h-full"
-                            src={`https://www.youtube.com/embed/${shorts[activeIndex].id}?modestbranding=1&rel=0&controls=1`}
-                            title={`YouTube Short ${activeIndex + 1}`}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowFullScreen
-                          />
+                          <div ref={shortsPlayerContainerRef} className="w-full h-full relative z-10" />
                         ) : (
-                          <iframe
-                            className="w-full h-full"
-                            src={`https://www.youtube.com/embed/${item.id}?modestbranding=1&rel=0&controls=1`}
-                            title={`YouTube Short ${item.rel + 1}`}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowFullScreen
+                          <img
+                            src={`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`}
+                            alt="Upcoming short preview"
+                            className="w-full h-full object-cover"
                           />
                         )}
                       </motion.div>
@@ -313,7 +431,11 @@ export default function OurWorkSection() {
                     <button
                       key={idx}
                       aria-label={`Go to video ${idx + 1}`}
-                      onClick={() => setLongFormActiveIndex(idx)}
+                      onClick={() => {
+                        setLongFormActiveIndex(idx)
+                        setIsPlayingShorts(false)
+                        setIsPlayingLongForm(false)
+                      }}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
                         idx === longFormActiveIndex ? 'bg-primary w-8' : 'bg-gray-300 w-3.5'
                       }`}
@@ -331,8 +453,6 @@ export default function OurWorkSection() {
                 dragElastic={0.2}
                 onDragStart={() => setIsDraggingLongForm(true)}
                 onDragEnd={handleLongFormDragEnd}
-                onMouseEnter={() => setIsInteractingLongForm(true)}
-                onMouseLeave={() => setIsInteractingLongForm(false)}
                 whileTap={{ cursor: "grabbing" }}
               >
                 {/* Drag handle overlay */}
@@ -370,13 +490,7 @@ export default function OurWorkSection() {
                         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
                       >
                         {isActive ? (
-                          <iframe
-                            className="w-full h-full"
-                            src={`https://www.youtube.com/embed/${item.id}?modestbranding=1&rel=0&controls=1`}
-                            title={`YouTube Video ${longFormActiveIndex + 1}`}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowFullScreen
-                          />
+                          <div ref={longFormPlayerContainerRef} className="w-full h-full relative z-10" />
                         ) : (
                           <img
                             src={`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`}
