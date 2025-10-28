@@ -385,7 +385,7 @@ export default function OurWorkSection() {
                   </motion.p>
                 </AnimatePresence>
 
-                <div className="w-full max-w-[200px] mt-4 self-center lg:self-start">
+                <div className="w-full max-w-xs mx-auto lg:mx-0 lg:max-w-[200px] mt-4 self-center lg:self-start">
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -395,7 +395,7 @@ export default function OurWorkSection() {
                   >
                     <button
                       onClick={() => setActiveIndex((prev) => (prev - 1 + shorts.length) % shorts.length)}
-                      className="group p-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                      className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
                     >
                       <svg
                         className="w-4 h-4 text-gray-700 group-hover:text-white"
@@ -408,13 +408,13 @@ export default function OurWorkSection() {
                       </svg>
                     </button>
                     <div className="flex items-center space-x-2">
-                      <p className="text-sm font-semibold text-gray-600">
-                        {activeIndex + 1} of {shorts.length}
+                      <p className="text-base font-semibold text-gray-600">
+                        <span className="text-primary font-inria italic">{activeIndex + 1}</span> of {shorts.length}
                       </p>
                     </div>
                     <button
                       onClick={() => setActiveIndex((prev) => (prev + 1) % shorts.length)}
-                      className="group p-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                      className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
                     >
                       <svg
                         className="w-4 h-4 text-gray-700 group-hover:text-white"
@@ -525,7 +525,7 @@ export default function OurWorkSection() {
                   </motion.p>
                 </AnimatePresence>
 
-                <div className="w-full max-w-[200px] mt-4 self-center lg:self-start">
+                <div className="w-full max-w-xs mx-auto lg:mx-0 lg:max-w-[200px] mt-4 self-center lg:self-start">
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -537,7 +537,7 @@ export default function OurWorkSection() {
                       onClick={() =>
                         setLongFormActiveIndex((prev) => (prev - 1 + longFormVideos.length) % longFormVideos.length)
                       }
-                      className="group p-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                      className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
                     >
                       <svg
                         className="w-4 h-4 text-gray-700 group-hover:text-white"
@@ -550,15 +550,16 @@ export default function OurWorkSection() {
                       </svg>
                     </button>
                     <div className="flex items-center space-x-2">
-                      <p className="text-sm font-semibold text-gray-600">
-                        {longFormActiveIndex + 1} of {longFormVideos.length}
+                      <p className="text-base font-semibold text-gray-600">
+                        <span className="text-primary font-inria italic">{longFormActiveIndex + 1}</span> of{' '}
+                        {longFormVideos.length}
                       </p>
                     </div>
                     <button
                       onClick={() =>
                         setLongFormActiveIndex((prev) => (prev + 1) % longFormVideos.length)
                       }
-                      className="group p-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                      className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
                     >
                       <svg
                         className="w-4 h-4 text-gray-700 group-hover:text-white"
