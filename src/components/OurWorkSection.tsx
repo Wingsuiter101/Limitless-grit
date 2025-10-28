@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState, useRef } from 'react'
-import { motion, AnimatePresence, PanInfo } from 'framer-motion'
+import { motion, AnimatePresence, PanInfo, useAnimationControls } from 'framer-motion'
 import Link from 'next/link'
 import AIToolsSection from './AIToolsSection'
 
@@ -52,12 +52,15 @@ export default function OurWorkSection() {
   const [isDraggingShorts, setIsDraggingShorts] = useState(false)
   const [isPlayingShorts, setIsPlayingShorts] = useState(false)
   const shortsAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
+  const shortsProgressControls = useAnimationControls()
 
   // YT API player instances and readiness
   const shortsPlayerRef = useRef<any | null>(null)
   const longFormPlayerRef = useRef<any | null>(null)
-  const shortsPlayerContainerRef = useRef<HTMLDivElement | null>(null)
-  const longFormPlayerContainerRef = useRef<HTMLDivElement | null>(null)
+  const shortsPlayerWrapperRef = useRef<HTMLDivElement | null>(null)
+  const longsPlayerWrapperRef = useRef<HTMLDivElement | null>(null)
+  const shortsMountRef = useRef<HTMLDivElement | null>(null)
+  const longFormMountRef = useRef<HTMLDivElement | null>(null)
   const [ytApiReady, setYtApiReady] = useState(false)
 
   // Load YouTube IFrame API once
@@ -134,6 +137,7 @@ export default function OurWorkSection() {
   const [isDraggingLongForm, setIsDraggingLongForm] = useState(false)
   const [isPlayingLongForm, setIsPlayingLongForm] = useState(false)
   const longFormAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
+  const longFormProgressControls = useAnimationControls()
   
   const longFormOrdered = useMemo(() => {
     return longFormVideos.map((item, idx) => ({
@@ -141,35 +145,6 @@ export default function OurWorkSection() {
       rel: (idx - longFormActiveIndex + longFormVideos.length) % longFormVideos.length
     }))
   }, [longFormActiveIndex])
-
-  // Listen for YouTube iframe messages to detect play/pause
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      if (event.origin !== 'https://www.youtube.com') return;
-
-      let data;
-      try {
-        data = JSON.parse(event.data);
-      } catch (error) {
-        return;
-      }
-
-      if (data.event === 'onStateChange' || (data.event === 'infoDelivery' && data.info)) {
-        const playerState = data.info?.playerState ?? data.info;
-
-        if (playerState === 1) { // Playing
-          setIsPlayingShorts(true);
-          setIsPlayingLongForm(true);
-        } else if ([0, 2, 5].includes(playerState)) { // Ended, Paused, Cued
-          setIsPlayingShorts(false);
-          setIsPlayingLongForm(false);
-        }
-      }
-    };
-
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
-  }, []);
 
   // Auto-play for long form
   useEffect(() => {
@@ -197,6 +172,40 @@ export default function OurWorkSection() {
     }
   }, [isDraggingLongForm, isPlayingLongForm])
 
+  // Shorts progress bar
+  useEffect(() => {
+    const startProgress = () => {
+      shortsProgressControls.set({ width: '0%' })
+      shortsProgressControls.start({
+        width: '100%',
+        transition: { duration: 10, ease: 'linear' }
+      })
+    }
+
+    if (!isDraggingShorts && !isPlayingShorts) {
+      startProgress()
+    } else {
+      shortsProgressControls.stop()
+    }
+  }, [activeIndex, isDraggingShorts, isPlayingShorts, shortsProgressControls])
+
+  // Long form progress bar
+  useEffect(() => {
+    const startProgress = () => {
+      longFormProgressControls.set({ width: '0%' })
+      longFormProgressControls.start({
+        width: '100%',
+        transition: { duration: 10, ease: 'linear' }
+      })
+    }
+
+    if (!isDraggingLongForm && !isPlayingLongForm) {
+      startProgress()
+    } else {
+      longFormProgressControls.stop()
+    }
+  }, [longFormActiveIndex, isDraggingLongForm, isPlayingLongForm, longFormProgressControls])
+
   const handleLongFormDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const swipeThreshold = 50
     if (Math.abs(info.offset.x) > swipeThreshold) {
@@ -213,60 +222,121 @@ export default function OurWorkSection() {
     setIsDraggingLongForm(false)
   }
 
-  // Create/destroy Shorts player on active change
+  // Create players once when API is ready
   useEffect(() => {
     if (!ytApiReady) return
     const w = window as any
-    if (!shortsPlayerContainerRef.current) return
-    // destroy previous
-    if (shortsPlayerRef.current && shortsPlayerRef.current.destroy) {
-      try { shortsPlayerRef.current.destroy() } catch {}
-      shortsPlayerRef.current = null
-    }
-    shortsPlayerRef.current = new w.YT.Player(shortsPlayerContainerRef.current, {
-      videoId: shorts[activeIndex].id,
-      playerVars: { modestbranding: 1, rel: 0, controls: 1 },
-      events: {
-        onStateChange: (e: any) => {
-          const playing = e?.data === 1
-          setIsPlayingShorts(playing)
-        },
-      },
-    })
-    return () => {
-      if (shortsPlayerRef.current && shortsPlayerRef.current.destroy) {
-        try { shortsPlayerRef.current.destroy() } catch {}
-        shortsPlayerRef.current = null
-      }
-    }
-  }, [ytApiReady, activeIndex])
 
-  // Create/destroy Long Form player on active change
-  useEffect(() => {
-    if (!ytApiReady) return
-    const w = window as any
-    if (!longFormPlayerContainerRef.current) return
-    if (longFormPlayerRef.current && longFormPlayerRef.current.destroy) {
-      try { longFormPlayerRef.current.destroy() } catch {}
-      longFormPlayerRef.current = null
+    if (shortsPlayerWrapperRef.current && !shortsPlayerRef.current) {
+      const mount = document.createElement('div')
+      shortsMountRef.current = mount
+      shortsPlayerWrapperRef.current.appendChild(mount)
+      shortsPlayerRef.current = new w.YT.Player(mount, {
+        videoId: shorts[activeIndex].id,
+        playerVars: { modestbranding: 1, rel: 0, controls: 1, autoplay: 0 },
+        events: {
+          onReady: () => {
+            const iframe = shortsPlayerRef.current?.getIframe?.()
+            if (iframe) {
+              iframe.style.width = '100%'
+              iframe.style.height = '100%'
+            }
+          },
+          onStateChange: (e: any) => {
+            const playing = e?.data === 1
+            setIsPlayingShorts(playing)
+            if (playing && longFormPlayerRef.current?.pauseVideo) {
+              try { longFormPlayerRef.current.pauseVideo() } catch {}
+            }
+            if (!playing) {
+              // no-op
+            }
+          }
+        }
+      })
     }
-    longFormPlayerRef.current = new w.YT.Player(longFormPlayerContainerRef.current, {
-      videoId: longFormVideos[longFormActiveIndex].id,
-      playerVars: { modestbranding: 1, rel: 0, controls: 1 },
-      events: {
-        onStateChange: (e: any) => {
-          const playing = e?.data === 1
-          setIsPlayingLongForm(playing)
-        },
-      },
-    })
+
+    if (longsPlayerWrapperRef.current && !longFormPlayerRef.current) {
+      const mount = document.createElement('div')
+      longFormMountRef.current = mount
+      longsPlayerWrapperRef.current.appendChild(mount)
+      longFormPlayerRef.current = new w.YT.Player(mount, {
+        videoId: longFormVideos[longFormActiveIndex].id,
+        playerVars: { modestbranding: 1, rel: 0, controls: 1, autoplay: 0 },
+        events: {
+          onReady: () => {
+            const iframe = longFormPlayerRef.current?.getIframe?.()
+            if (iframe) {
+              iframe.style.width = '100%'
+              iframe.style.height = '100%'
+            }
+          },
+          onStateChange: (e: any) => {
+            const playing = e?.data === 1
+            setIsPlayingLongForm(playing)
+            if (playing && shortsPlayerRef.current?.pauseVideo) {
+              try { shortsPlayerRef.current.pauseVideo() } catch {}
+            }
+          }
+        }
+      })
+    }
+
     return () => {
-      if (longFormPlayerRef.current && longFormPlayerRef.current.destroy) {
-        try { longFormPlayerRef.current.destroy() } catch {}
-        longFormPlayerRef.current = null
+      // Cleanup on unmount
+      try {
+        if (shortsPlayerRef.current && typeof shortsPlayerRef.current.destroy === 'function') {
+          const iframe = shortsPlayerRef.current.getIframe?.()
+          if (!iframe || iframe.parentNode) shortsPlayerRef.current.destroy()
+        }
+      } catch {}
+      if (shortsMountRef.current && shortsPlayerWrapperRef.current?.contains(shortsMountRef.current)) {
+        try { shortsPlayerWrapperRef.current.removeChild(shortsMountRef.current) } catch {}
       }
+      try {
+        if (longFormPlayerRef.current && typeof longFormPlayerRef.current.destroy === 'function') {
+          const iframe = longFormPlayerRef.current.getIframe?.()
+          if (!iframe || iframe.parentNode) longFormPlayerRef.current.destroy()
+        }
+      } catch {}
+      if (longFormMountRef.current && longsPlayerWrapperRef.current?.contains(longFormMountRef.current)) {
+        try { longsPlayerWrapperRef.current.removeChild(longFormMountRef.current) } catch {}
+      }
+      shortsPlayerRef.current = null
+      longFormPlayerRef.current = null
+      shortsMountRef.current = null
+      longFormMountRef.current = null
     }
-  }, [ytApiReady, longFormActiveIndex])
+  }, [ytApiReady])
+
+  // Update video on index change (no re-mount)
+  useEffect(() => {
+    const p = shortsPlayerRef.current
+    if (ytApiReady && p) {
+      try {
+        if (typeof p.cueVideoById === 'function') {
+          p.cueVideoById(shorts[activeIndex].id)
+        } else if (typeof p.loadVideoById === 'function') {
+          p.loadVideoById(shorts[activeIndex].id)
+        }
+      } catch {}
+    }
+  }, [activeIndex, ytApiReady])
+
+  useEffect(() => {
+    const p = longFormPlayerRef.current
+    if (ytApiReady && p) {
+      try {
+        if (typeof p.cueVideoById === 'function') {
+          p.cueVideoById(longFormVideos[longFormActiveIndex].id)
+        } else if (typeof p.loadVideoById === 'function') {
+          p.loadVideoById(longFormVideos[longFormActiveIndex].id)
+        }
+      } catch {}
+    }
+  }, [longFormActiveIndex, ytApiReady])
+
+  // Removed per-slide mount/unmount player effects in favor of persistent players
 
   return (
     <section className="pt-16 pb-0 bg-white">
@@ -315,21 +385,48 @@ export default function OurWorkSection() {
                   </motion.p>
                 </AnimatePresence>
 
-                <div className="flex items-center justify-center lg:justify-start gap-3">
-                  {shorts.map((_, idx) => (
+                <div className="w-full max-w-[200px] mt-4 self-center lg:self-start">
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    className="flex items-center justify-center lg:justify-start space-x-4 mt-4"
+                  >
                     <button
-                      key={idx}
-                      aria-label={`Go to short ${idx + 1}`}
-                      onClick={() => {
-                        setActiveIndex(idx)
-                        setIsPlayingShorts(false)
-                        setIsPlayingLongForm(false)
-                      }}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${
-                        idx === activeIndex ? 'bg-primary w-8' : 'bg-gray-300 w-3.5'
-                      }`}
-                    />
-                  ))}
+                      onClick={() => setActiveIndex((prev) => (prev - 1 + shorts.length) % shorts.length)}
+                      className="group p-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                    >
+                      <svg
+                        className="w-4 h-4 text-gray-700 group-hover:text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+                      </svg>
+                    </button>
+                    <div className="flex items-center space-x-2">
+                      <p className="text-sm font-semibold text-gray-600">
+                        {activeIndex + 1} of {shorts.length}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setActiveIndex((prev) => (prev + 1) % shorts.length)}
+                      className="group p-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                    >
+                      <svg
+                        className="w-4 h-4 text-gray-700 group-hover:text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                      </svg>
+                    </button>
+                  </motion.div>
                 </div>
               </div>
             </div>
@@ -379,7 +476,7 @@ export default function OurWorkSection() {
                         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
                       >
                         {isActive ? (
-                          <div ref={shortsPlayerContainerRef} className="w-full h-full relative z-10" />
+                          <div className="w-full h-full relative z-10" />
                         ) : (
                           <img
                             src={`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`}
@@ -390,6 +487,8 @@ export default function OurWorkSection() {
                       </motion.div>
                     )
                   })}
+                {/* Persistent Shorts player overlay (wrapper only; YT mounts inside) */}
+                <div ref={shortsPlayerWrapperRef} className="absolute inset-0 w-full h-full z-30 rounded-2xl overflow-hidden" />
               </motion.div>
             </div>
           </div>
@@ -426,21 +525,52 @@ export default function OurWorkSection() {
                   </motion.p>
                 </AnimatePresence>
 
-                <div className="flex items-center justify-center lg:justify-start gap-3">
-                  {longFormVideos.map((_, idx) => (
+                <div className="w-full max-w-[200px] mt-4 self-center lg:self-start">
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    className="flex items-center justify-center lg:justify-start space-x-4 mt-4"
+                  >
                     <button
-                      key={idx}
-                      aria-label={`Go to video ${idx + 1}`}
-                      onClick={() => {
-                        setLongFormActiveIndex(idx)
-                        setIsPlayingShorts(false)
-                        setIsPlayingLongForm(false)
-                      }}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${
-                        idx === longFormActiveIndex ? 'bg-primary w-8' : 'bg-gray-300 w-3.5'
-                      }`}
-                    />
-                  ))}
+                      onClick={() =>
+                        setLongFormActiveIndex((prev) => (prev - 1 + longFormVideos.length) % longFormVideos.length)
+                      }
+                      className="group p-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                    >
+                      <svg
+                        className="w-4 h-4 text-gray-700 group-hover:text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+                      </svg>
+                    </button>
+                    <div className="flex items-center space-x-2">
+                      <p className="text-sm font-semibold text-gray-600">
+                        {longFormActiveIndex + 1} of {longFormVideos.length}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() =>
+                        setLongFormActiveIndex((prev) => (prev + 1) % longFormVideos.length)
+                      }
+                      className="group p-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                    >
+                      <svg
+                        className="w-4 h-4 text-gray-700 group-hover:text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                      </svg>
+                    </button>
+                  </motion.div>
                 </div>
               </div>
             </div>
@@ -490,7 +620,7 @@ export default function OurWorkSection() {
                         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
                       >
                         {isActive ? (
-                          <div ref={longFormPlayerContainerRef} className="w-full h-full relative z-10" />
+                          <div className="w-full h-full relative z-10" />
                         ) : (
                           <img
                             src={`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`}
@@ -501,6 +631,8 @@ export default function OurWorkSection() {
                       </motion.div>
                     )
                   })}
+                {/* Persistent Long-form player overlay (wrapper only; YT mounts inside) */}
+                <div ref={longsPlayerWrapperRef} className="absolute inset-0 w-full h-full z-30 rounded-2xl overflow-hidden" />
               </motion.div>
             </div>
           </div>
@@ -539,3 +671,4 @@ export default function OurWorkSection() {
     </section>
   )
 }
+
