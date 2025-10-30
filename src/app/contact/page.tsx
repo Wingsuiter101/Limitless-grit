@@ -57,7 +57,7 @@ export default function ContactPage() {
               viewport={{ once: true }}
               className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow border border-gray-100"
             >
-              <div className="flex items-start gap-4">
+              <a href="mailto:hello@limitlessgrit.com" className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                 </div>
@@ -66,7 +66,7 @@ export default function ContactPage() {
                   <p className="text-primary font-medium">hello@limitlessgrit.com</p>
                   <p className="text-sm text-gray-600 mt-1">We'll get back to you within 24 hours</p>
                 </div>
-              </div>
+              </a>
             </motion.div>
 
             <motion.div 
@@ -76,7 +76,7 @@ export default function ContactPage() {
               viewport={{ once: true }}
               className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow border border-gray-100"
             >
-              <a href="YOUR_CALENDLY_LINK_HERE" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4">
+              <a href="#contact-form" className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3M5 11h14M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 </div>
@@ -92,7 +92,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form */}
-      <section className="py-36 pb-48 px-6 bg-gray-50">
+      <section id="contact-form" className="py-36 pb-48 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -102,7 +102,7 @@ export default function ContactPage() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark">
-              Start Your <span className="font-inria italic text-primary">Project</span>
+              Book a <span className="font-inria italic text-primary">Meeting</span>
             </h2>
             <p className="text-gray-600 mt-3">Fill out the form and we'll prepare next steps for you.</p>
           </motion.div>
@@ -156,7 +156,7 @@ export default function ContactPage() {
               </div>
 
               <button className="w-full bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-shadow shadow-lg hover:shadow-xl">
-                Send Project Inquiry
+                Book a Meeting
               </button>
             </form>
           </motion.div>
