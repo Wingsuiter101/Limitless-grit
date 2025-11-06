@@ -38,7 +38,7 @@ export default function ContactPage() {
       {/* Pricing Section removed per request */}
 
       {/* Premium Email Badge */}
-      <section className="pt-20 md:pt-32 pb-36 md:pb-48 px-6 bg-white">
+      <section className="pt-4 md:pt-32 pb-36 md:pb-48 px-6 bg-white">
         <div className="max-w-5xl mx-auto text-center">
           <div className="flex justify-center">
             <motion.div
@@ -51,8 +51,8 @@ export default function ContactPage() {
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}>
                 <a href="mailto:hello@limitlessgrit.com" className="group">
                   <motion.span 
-                    className="absolute -inset-8 rounded-[999px] bg-gradient-to-r from-primary/30 to-primary/10 blur-3xl opacity-70"
-                    animate={{ opacity: [0.6, 0.9, 0.6] }}
+                    className="absolute -inset-8 rounded-[999px] bg-gradient-to-r from-primary/15 to-primary/5 blur-3xl opacity-50"
+                    animate={{ opacity: [0.3, 0.5, 0.3] }}
                     transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
                   ></motion.span>
                   <span className="relative block rounded-[999px] p-[3px] bg-white shadow-[0_16px_50px_rgba(0,0,0,0.12)]">

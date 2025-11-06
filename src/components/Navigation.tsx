@@ -9,19 +9,28 @@ import { createPortal } from 'react-dom'
 
 const navItems = [
   { name: 'Home', href: '/' },
-  { name: 'Services', href: '/services' },
-  { name: 'About', href: '/about' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Services', href: '/services/' },
+  { name: 'About', href: '/about/' },
+  { name: 'Contact', href: '/contact/' },
 ]
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [isClosing, setIsClosing] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const handleNavClick = () => {
+    setIsClosing(true)
+    setTimeout(() => {
+      setIsOpen(false)
+      setIsClosing(false)
+    }, 300)
+  }
 
   return (
     <motion.nav
@@ -110,21 +119,21 @@ export default function Navigation() {
             {/* Mobile Menu Panel */}
             <motion.div
               initial={{ opacity: 0, x: '100%' }}
-              animate={{ opacity: 1, x: '0%' }}
+              animate={{ opacity: 1, x: isClosing ? '100%' : '0%' }}
               exit={{ opacity: 0, x: '100%' }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               className="fixed inset-0 h-full w-full bg-gradient-to-br from-white to-gray-50 shadow-2xl md:hidden z-[80] overflow-y-auto"
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                    <span className="text-white font-medium text-lg">LG</span>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium text-primary-dark">Limitless Grit</h3>
-                    <p className="text-xs text-gray-500">Creative Agency</p>
-                  </div>
+              <div className="flex items-center justify-between px-6 py-6 border-b border-gray-200">
+                <div className="flex items-center">
+                  <Image 
+                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/limitless-logo-long.png`}
+                    alt="Limitless Grit" 
+                    width={160}
+                    height={32}
+                    className="h-8 w-auto"
+                  />
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
@@ -137,7 +146,7 @@ export default function Navigation() {
               </div>
 
               {/* Navigation Links */}
-              <div className="px-6 py-8 space-y-4">
+              <div className="px-6 py-8 space-y-6">
                 {navItems.map((item, index) => (
                   <motion.div
                     key={item.name}
@@ -147,54 +156,14 @@ export default function Navigation() {
                   >
                     <Link
                       href={item.href}
-                      className={`group flex items-center justify-between w-full p-5 rounded-2xl text-2xl font-medium transition-all duration-300 ${
+                      className={`block w-full p-6 rounded-2xl text-2xl font-medium transition-all duration-500 ease-out ${
                         pathname === item.href
                           ? 'text-white bg-gradient-to-r from-primary to-secondary shadow-lg'
                           : 'text-primary-dark hover:text-primary hover:bg-gray-100'
                       }`}
-                      onClick={() => setIsOpen(false)}
+                      onClick={handleNavClick}
                     >
-                      <span className="flex items-center space-x-4">
-                        {/* Icon for each nav item */}
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 ${
-                          pathname === item.href ? 'bg-white/20' : 'bg-primary/10'
-                        }`}>
-                          {item.name === 'Home' && (
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            </svg>
-                          )}
-                          {item.name === 'Services' && (
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
-                          )}
-                          {item.name === 'About' && (
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                          )}
-                          {item.name === 'Case Studies' && (
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                            </svg>
-                          )}
-                          {item.name === 'Contact' && (
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                          )}
-                        </div>
-                        <span>{item.name}</span>
-                      </span>
-                      <svg 
-                        className={`w-6 h-6 transition-transform duration-300 ${pathname === item.href ? 'rotate-0' : 'group-hover:translate-x-1'}`} 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                      {item.name}
                     </Link>
                   </motion.div>
                 ))}
@@ -208,11 +177,11 @@ export default function Navigation() {
                 className="px-6 py-8 mt-auto border-t border-gray-200"
               >
                 <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl p-6 text-white text-center">
-                  <h4 className="text-xl font-medium mb-2">Ready to Get Started?</h4>
-                  <p className="text-base opacity-90 mb-4">Let's create something amazing together.</p>
-                  <Link href="/contact" onClick={() => setIsOpen(false)}>
+                  <h4 className="text-xl font-medium mb-2">Let's Build Something Great</h4>
+                  <p className="text-base opacity-90 mb-4">Your stories deserve to be told.</p>
+                  <Link href="/contact" onClick={handleNavClick}>
                     <button className="w-full bg-white text-primary hover:bg-gray-50 px-6 py-4 rounded-xl font-medium text-base transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                      Get Started Now
+                      Work with us
                     </button>
                   </Link>
                 </div>
