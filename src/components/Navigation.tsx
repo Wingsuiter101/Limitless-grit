@@ -48,7 +48,7 @@ export default function Navigation() {
                   href={item.href}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
                     pathname === item.href
-                      ? 'text-primary font-semibold'
+                      ? 'text-primary font-medium'
                       : 'text-primary-dark hover:text-primary'
                   }`}
                 >
@@ -61,7 +61,7 @@ export default function Navigation() {
           {/* CTA Button */}
           <div className="hidden md:block">
             <Link href="/contact">
-              <button className="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+              <button className="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full font-medium text-sm transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                 Get Started
               </button>
             </Link>
@@ -119,10 +119,10 @@ export default function Navigation() {
               <div className="flex items-center justify-between p-6 border-b border-gray-200">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">LG</span>
+                    <span className="text-white font-medium text-lg">LG</span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-primary-dark">Limitless Grit</h3>
+                    <h3 className="text-lg font-medium text-primary-dark">Limitless Grit</h3>
                     <p className="text-xs text-gray-500">Creative Agency</p>
                   </div>
                 </div>
@@ -147,7 +147,7 @@ export default function Navigation() {
                   >
                     <Link
                       href={item.href}
-                      className={`group flex items-center justify-between w-full p-5 rounded-2xl text-2xl font-semibold transition-all duration-300 ${
+                      className={`group flex items-center justify-between w-full p-5 rounded-2xl text-2xl font-medium transition-all duration-300 ${
                         pathname === item.href
                           ? 'text-white bg-gradient-to-r from-primary to-secondary shadow-lg'
                           : 'text-primary-dark hover:text-primary hover:bg-gray-100'
@@ -208,10 +208,10 @@ export default function Navigation() {
                 className="px-6 py-8 mt-auto border-t border-gray-200"
               >
                 <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl p-6 text-white text-center">
-                  <h4 className="text-xl font-bold mb-2">Ready to Get Started?</h4>
+                  <h4 className="text-xl font-medium mb-2">Ready to Get Started?</h4>
                   <p className="text-base opacity-90 mb-4">Let's create something amazing together.</p>
                   <Link href="/contact" onClick={() => setIsOpen(false)}>
-                    <button className="w-full bg-white text-primary hover:bg-gray-50 px-6 py-4 rounded-xl font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    <button className="w-full bg-white text-primary hover:bg-gray-50 px-6 py-4 rounded-xl font-medium text-base transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                       Get Started Now
                     </button>
                   </Link>

@@ -18,8 +18,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        'geist': ['var(--font-geist)'],
-        'inria': ['var(--font-inria-serif)'],
+        'inter': ['var(--font-inter)'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

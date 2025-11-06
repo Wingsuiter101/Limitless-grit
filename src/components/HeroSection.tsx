@@ -24,12 +24,12 @@ export default function HeroSection() {
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8 }}
 				>
-					<h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-primary-dark mb-6 leading-tight">
+					<h1 className="text-6xl md:text-8xl lg:text-9xl font-medium text-primary-dark mb-6 leading-tight">
 						Simplify
 					</h1>
 					<h2 className="text-5xl md:text-7xl lg:text-8xl font-light text-primary-dark mb-12 leading-tight">
 						Content{' '}
-						<span className="font-inria italic text-primary">Creation</span>
+						<span className="text-primary">Creation</span>
 					</h2>
 				</motion.div>
 
@@ -37,22 +37,10 @@ export default function HeroSection() {
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8, delay: 0.3 }}
-					className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed"
+					className="text-lg md:text-xl text-gray-600 mb-32 max-w-4xl mx-auto leading-relaxed"
 				>
-					We help CMOs and executives build impactful personal brands by 
-					simplifying content creation and amplifying their presence through 
-					strategic storytelling across platforms.
+					We partner with CMOs and executives to scale their company and personal brands through purposeful storytelling and consistent content execution.
 				</motion.p>
-
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8, delay: 0.6 }}
-				>
-					<button className="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-						Simplify Your Content
-					</button>
-				</motion.div>
 
 				{/* Scroll indicator */}
 				<motion.div

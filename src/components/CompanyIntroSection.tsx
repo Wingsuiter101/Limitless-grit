@@ -37,13 +37,13 @@ export default function TestimonialSection() {
             className="space-y-8"
           >
             <div>
-              <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-6">
+              <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
                 Company Intro
               </div>
               
-              <h3 className="text-4xl md:text-5xl font-bold text-primary-dark mb-6 leading-tight">
+              <h3 className="text-4xl md:text-5xl font-medium text-primary-dark mb-6 leading-tight">
                 A Creative-First{' '}
-                <span className="font-inria italic text-primary">Agency</span>
+                <span className="text-primary">Agency</span>
               </h3>
               
               <div className="text-lg text-gray-600 leading-relaxed mb-8 space-y-4">
@@ -52,7 +52,7 @@ export default function TestimonialSection() {
                   and a relentless drive to build meaningful stories.
                 </p>
                 <p>
-                  Founded by <strong>Shristi</strong> and <strong>Jugal</strong>, the agency began as a podcast 
+                  Founded by <strong>Shristi</strong> and <strong>Jugal</strong>, the agency began with content creation 
                   and naturally evolved into a focused studio for video editing, branding, and AI-integrated creative services.
                 </p>
                 <p>
@@ -64,10 +64,10 @@ export default function TestimonialSection() {
               
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">SS</span>
+                  <span className="text-white font-medium text-lg">SS</span>
                 </div>
                 <div>
-                  <p className="font-semibold text-primary-dark">Shristi Sheth</p>
+                  <p className="font-medium text-primary-dark">Shristi Sheth</p>
                   <p className="text-gray-500">Content Lead / Creative Head</p>
                 </div>
               </div>

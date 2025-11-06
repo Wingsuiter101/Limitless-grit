@@ -15,8 +15,8 @@ export default function TermsOfServicePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-primary-dark mb-6">
-              Terms of <span className="font-inria italic text-primary">Service</span>
+            <h1 className="text-5xl md:text-6xl font-medium text-primary-dark mb-6">
+              Terms of <span className="text-primary">Service</span>
             </h1>
             <p className="text-lg text-gray-600">
               Last updated: January 2025
@@ -44,17 +44,17 @@ export default function TermsOfServicePage() {
 
             {/* Services */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Our Services
               </h2>
               <p className="text-gray-600 leading-relaxed">
-                Limitless Grit provides creative services including but not limited to video editing, content strategy, podcast production, branding, and web development. The specific services provided will be outlined in individual project agreements or statements of work.
+                Limitless Grit provides creative services including but not limited to video editing, content strategy, content production, branding, and web development. The specific services provided will be outlined in individual project agreements or statements of work.
               </p>
             </div>
 
             {/* Use of Services */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Use of Services
               </h2>
               <div className="space-y-3 text-gray-600">
@@ -72,26 +72,26 @@ export default function TermsOfServicePage() {
 
             {/* Intellectual Property */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Intellectual Property Rights
               </h2>
               <div className="space-y-4 text-gray-600">
                 <div>
-                  <h3 className="text-xl font-semibold text-primary-dark mb-2">Our Content</h3>
+                  <h3 className="text-xl font-medium text-primary-dark mb-2">Our Content</h3>
                   <p className="leading-relaxed">
                     All content on our website, including text, graphics, logos, images, and software, is the property of Limitless Grit or its content suppliers and is protected by intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written permission.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-primary-dark mb-2">Client Content</h3>
+                  <h3 className="text-xl font-medium text-primary-dark mb-2">Client Content</h3>
                   <p className="leading-relaxed">
                     You retain all rights to the content and materials you provide to us. By providing content, you grant us a license to use, reproduce, and modify such content solely for the purpose of delivering our services to you.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-primary-dark mb-2">Deliverables</h3>
+                  <h3 className="text-xl font-medium text-primary-dark mb-2">Deliverables</h3>
                   <p className="leading-relaxed">
                     Upon full payment for services, you will receive the agreed-upon rights to the final deliverables as specified in your project agreement. Unless otherwise stated, Limitless Grit retains the right to showcase completed work in our portfolio and marketing materials.
                   </p>
@@ -101,7 +101,7 @@ export default function TermsOfServicePage() {
 
             {/* Payment Terms */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Payment Terms
               </h2>
               <div className="space-y-3 text-gray-600">
@@ -117,7 +117,7 @@ export default function TermsOfServicePage() {
 
             {/* Project Agreements */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Project Agreements
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -127,7 +127,7 @@ export default function TermsOfServicePage() {
 
             {/* Revisions and Changes */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Revisions and Changes
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -137,7 +137,7 @@ export default function TermsOfServicePage() {
 
             {/* Warranties and Disclaimers */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Warranties and Disclaimers
               </h2>
               <div className="space-y-3 text-gray-600">
@@ -158,7 +158,7 @@ export default function TermsOfServicePage() {
 
             {/* Limitation of Liability */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Limitation of Liability
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -168,7 +168,7 @@ export default function TermsOfServicePage() {
 
             {/* Confidentiality */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Confidentiality
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -178,7 +178,7 @@ export default function TermsOfServicePage() {
 
             {/* Termination */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Termination
               </h2>
               <div className="space-y-3 text-gray-600">
@@ -198,7 +198,7 @@ export default function TermsOfServicePage() {
 
             {/* Governing Law */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Governing Law
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -208,7 +208,7 @@ export default function TermsOfServicePage() {
 
             {/* Changes to Terms */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Changes to These Terms
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -218,7 +218,7 @@ export default function TermsOfServicePage() {
 
             {/* Contact */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Contact Us
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -233,7 +233,7 @@ export default function TermsOfServicePage() {
 
           {/* Back to Home */}
           <div className="mt-12 pt-8 border-t border-gray-200 text-center">
-            <Link href="/" className="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+            <Link href="/" className="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl">
               Back to Home
             </Link>
           </div>

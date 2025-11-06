@@ -41,11 +41,11 @@ export default function AgencySection() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-6xl md:text-7xl font-bold text-primary-dark mb-8">
+          <h2 className="text-6xl md:text-7xl font-normal text-primary-dark mb-8">
             We're more than just an{' '}
-            <span className="font-inria italic text-primary">Agency.</span>
+            <span className="font-medium text-primary">Agency.</span>
           </h2>
-          <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
             We're your strategic partners in building a brand that not only stands out 
             but drives meaningful business results and lasting impact in your industry.
           </p>
@@ -66,14 +66,14 @@ export default function AgencySection() {
                 <div className="flex items-start space-x-6">
                   <div className="flex-shrink-0">
                     <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-white font-bold text-xl">
+                      <span className="text-white font-medium text-xl">
                         {service.number}
                       </span>
                     </div>
                   </div>
                   
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-primary-dark mb-4">
+                    <h3 className="text-2xl font-medium text-primary-dark mb-4">
                       {service.title}
                     </h3>
                     <p className="text-gray-600 leading-relaxed mb-6">

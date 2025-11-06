@@ -37,22 +37,22 @@ export default function Footer() {
               className="justify-self-center md:justify-self-start text-center md:text-left"
             >
               <Link href="/" className="flex flex-col items-center md:flex-row md:items-center justify-center md:justify-start gap-2 md:gap-3 mb-2">
-                <div className="relative w-20 h-20 md:w-10 md:h-10">
+                <div className="relative w-20 h-20 md:w-14 md:h-14">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/limitless-monogram.png`}
                     alt="Limitless Grit Logo"
                     fill
                     className="object-contain"
-                    sizes="(max-width: 768px) 80px, 40px"
+                    sizes="(max-width: 768px) 80px, 56px"
                   />
                 </div>
-                <div className="relative w-40 h-8 md:w-32 md:h-6">
+                <div className="relative w-40 h-8 md:w-44 md:h-8">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/limitless-logo-text.png`}
                     alt="Limitless Grit"
                     fill
                     className="object-contain"
-                    sizes="(max-width: 768px) 160px, 128px"
+                    sizes="(max-width: 768px) 160px, 176px"
                   />
                 </div>
               </Link>
@@ -69,7 +69,7 @@ export default function Footer() {
               viewport={{ once: true }}
               className="h-full flex flex-col items-center md:items-start text-center md:text-left space-y-3"
             >
-              <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Contact</h4>
+              <h4 className="text-sm font-medium text-white mb-4 uppercase tracking-wider md:mt-3">Contact</h4>
               <a href="mailto:hello@limitlessgrit.com" className="block text-gray-300 hover:text-primary transition-colors">
                 hello@limitlessgrit.com
               </a>
@@ -84,7 +84,7 @@ export default function Footer() {
               viewport={{ once: true }}
               className="h-full flex flex-col items-center md:items-start text-center md:text-left"
             >
-              <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Pages</h4>
+              <h4 className="text-sm font-medium text-white mb-4 uppercase tracking-wider md:mt-3">Pages</h4>
               <ul className="space-y-2">
                 {pageLinks.map((link) => (
                   <li key={link.name}>
@@ -107,7 +107,7 @@ export default function Footer() {
               viewport={{ once: true }}
               className="h-full flex flex-col items-center md:items-start text-center md:text-left"
             >
-              <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Legal</h4>
+              <h4 className="text-sm font-medium text-white mb-4 uppercase tracking-wider md:mt-3">Legal</h4>
               <ul className="space-y-2">
                 {legalLinks.map((link) => (
                   <li key={link.name}>
@@ -174,11 +174,11 @@ export default function Footer() {
               <div className="flex items-center space-x-2">
                 <span>Powered by</span>
                 <div className="flex items-center space-x-1">
-                  <span className="font-bold text-white">Next.js</span>
+                  <span className="font-medium text-white">Next.js</span>
                   <span>•</span>
-                  <span className="font-bold text-white">Tailwind</span>
+                  <span className="font-medium text-white">Tailwind</span>
                   <span>•</span>
-                  <span className="font-bold text-white">Sanity</span>
+                  <span className="font-medium text-white">Sanity</span>
                 </div>
               </div>
             </div>

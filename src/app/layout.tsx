@@ -1,15 +1,13 @@
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { Inria_Serif } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import Navigation from '@/components/Navigation'
 import FloatingLogo from '@/components/FloatingLogo'
 import './globals.css'
 
-const inriaSerif = Inria_Serif({
+const inter = Inter({
   subsets: ['latin'],
-  style: ['normal', 'italic'],
-  weight: ['300', '400', '700'],
-  variable: '--font-inria-serif',
+  weight: ['400', '500'],
+  variable: '--font-inter',
 })
 
 export const metadata: Metadata = {
@@ -24,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${GeistSans.variable} ${inriaSerif.variable} font-geist antialiased`}>
+      <body className={`${inter.variable} font-inter antialiased`}>
         <FloatingLogo />
         <Navigation />
         {children}

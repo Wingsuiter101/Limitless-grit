@@ -6,27 +6,27 @@ import { Zap, Clapperboard, ImageIcon, AudioWaveform } from 'lucide-react'
 const capabilities = [
   {
     icon: Zap,
-    title: 'AI-Powered Editing',
+    title: 'Precision Editing',
     description:
-      'We leverage AI to accelerate the editing process, identifying the most compelling moments, removing silences, and ensuring a seamless flow.',
+      'We identify the most compelling moments, remove silences, and ensure seamless flow, accelerated by AI to deliver faster without compromising quality.',
   },
   {
     icon: Clapperboard,
-    title: 'Generative Video',
+    title: 'Dynamic Visuals',
     description:
-      'From creating b-roll to generating entire scenes, we use generative AI to produce unique video content that would be impossible with traditional methods.',
+      'From custom b-roll to entire scenes, we produce unique video content that enhances your narrative using generative tools to create what traditional methods can\'t.',
   },
   {
     icon: ImageIcon,
-    title: 'AI Image Generation',
+    title: 'Visual Assets',
     description:
-      'We create stunning, custom thumbnails, social media assets, and in-video graphics using state-of-the-art AI image generation models.',
+      'Custom thumbnails, social media assets, and in-video graphics designed to capture attention and drive engagement, powered by advanced image generation.',
   },
   {
     icon: AudioWaveform,
-    title: 'Enhanced Audio',
+    title: 'Professional Audio',
     description:
-      'Our AI tools can clean up audio, remove background noise, and even clone voices for seamless ad-reads or corrections, ensuring crystal-clear sound.',
+      'Crystal-clear sound that elevates your content. We clean up audio, remove background noise, and ensure consistent quality, enhanced by AI audio tools.',
   },
 ]
 
@@ -41,11 +41,11 @@ export default function AIToolsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary-dark">
-            AI <span className="font-inria italic text-primary">Capabilities</span>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-primary-dark">
+            AI <span className="font-medium text-primary">Capabilities</span>
           </h2>
           <p className="mt-8 text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            We integrate the latest AI technologies to push the boundaries of creativity and efficiency in content production.
+            Studio-quality content, delivered faster with AI-powered tools.
           </p>
         </motion.div>
 
@@ -62,7 +62,7 @@ export default function AIToolsSection() {
               <div className="inline-block bg-primary text-white p-4 rounded-full mb-6">
                 <item.icon className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-primary-dark mb-4">{item.title}</h3>
+              <h3 className="text-xl font-medium text-primary-dark mb-4">{item.title}</h3>
               <p className="text-gray-600">{item.description}</p>
             </motion.div>
           ))}

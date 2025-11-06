@@ -47,13 +47,13 @@ export default function CreatorCompany() {
             className="space-y-8"
           >
             <div>
-              <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-6">
+              <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
                 Our Philosophy
               </div>
               
-              <h2 className="text-5xl md:text-6xl font-bold text-primary-dark mb-6 leading-tight">
+              <h2 className="text-5xl md:text-6xl font-medium text-primary-dark mb-6 leading-tight">
                 A Creator-First{' '}
-                <span className="font-inria italic text-primary">Company</span>
+                <span className="text-primary">Company</span>
               </h2>
               
               <p className="text-xl text-gray-600 leading-relaxed mb-8">
@@ -78,7 +78,7 @@ export default function CreatorCompany() {
                     <principle.icon className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-primary-dark mb-2">
+                    <h3 className="text-lg font-medium text-primary-dark mb-2">
                       {principle.title}
                     </h3>
                     <p className="text-gray-600">
@@ -95,7 +95,7 @@ export default function CreatorCompany() {
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              <button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-medium text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Partner With Us
               </button>
             </motion.div>
@@ -164,9 +164,9 @@ export default function CreatorCompany() {
           className="mt-20 bg-gradient-to-r from-primary to-secondary rounded-3xl p-12 text-white"
         >
           <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">
+            <h3 className="text-3xl md:text-4xl font-medium mb-4">
               Impact by the{' '}
-              <span className="font-inria italic">Numbers</span>
+              <span className="">Numbers</span>
             </h3>
             <p className="text-xl opacity-90">
               Our commitment to creator success translates into measurable results
@@ -183,7 +183,7 @@ export default function CreatorCompany() {
                 viewport={{ once: true }}
                 className="text-center"
               >
-                <div className="text-4xl md:text-5xl font-bold mb-2">
+                <div className="text-4xl md:text-5xl font-medium mb-2">
                   {achievement.metric}
                 </div>
                 <div className="text-lg opacity-90">

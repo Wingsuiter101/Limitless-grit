@@ -33,9 +33,9 @@ const editingProcess = [
 ]
 
 const whatYouGet = [
-  "Long Form Podcast Production",
+  "Long form video production",
   "Social Clips Identification",
-  "Custom Podcast Episode Thumbnails",
+  "Custom Thumbnails",
   "Custom Intro for each episode",
 ]
 
@@ -61,12 +61,11 @@ export default function ServicesPage() {
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.8 }}
 					>
-						<h1 className="text-6xl md:text-7xl font-bold text-primary-dark mb-6">
-							Our <span className="font-inria italic text-primary">Services</span>
+						<h1 className="text-6xl md:text-7xl font-normal text-primary-dark mb-6">
+							Our <span className="font-medium text-primary">Services</span>
 						</h1>
-						<p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto">
-							A refined four-stage production process that transforms raw content into 
-							polished podcasts, engaging shorts, and scroll-stopping visuals.
+						<p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto">
+							End-to-end content creation that grows your audience and drives real impact.
 						</p>
 					</motion.div>
 				</div>
@@ -82,9 +81,9 @@ export default function ServicesPage() {
 					viewport={{ once: true }}
 					className="text-center mb-16"
 				>
-					<h2 className="text-5xl md:text-6xl font-bold text-primary-dark mb-6">
+					<h2 className="text-5xl md:text-6xl font-normal text-primary-dark mb-6">
 						Our Production{' '}
-						<span className="font-inria italic text-primary">Process</span>
+						<span className="font-medium text-primary">Process</span>
 					</h2>
 						<p className="text-xl text-gray-600 max-w-3xl mx-auto">
 							A clear, collaborative four-step process designed for quality and efficiency.
@@ -105,7 +104,7 @@ export default function ServicesPage() {
 								<div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
 									<step.icon className="w-8 h-8 text-primary" />
 								</div>
-								<h3 className="text-xl font-bold text-primary-dark mb-3">
+								<h3 className="text-xl font-medium text-primary-dark mb-3">
 									{step.title}
 								</h3>
 								<p className="text-gray-600 text-sm leading-relaxed">
@@ -127,13 +126,12 @@ export default function ServicesPage() {
 						viewport={{ once: true }}
 						className="text-center mb-12"
 					>
-						<h2 className="text-5xl md:text-6xl font-bold text-primary-dark mb-6">
+						<h2 className="text-5xl md:text-6xl font-normal text-primary-dark mb-6">
 							What You{' '}
-							<span className="font-inria italic text-primary">Get</span>
+							<span className="font-medium text-primary">Get</span>
 						</h2>
 						<p className="text-xl text-gray-600 max-w-3xl mx-auto">
-							A comprehensive package designed to elevate your podcast presence 
-							and maximize your content's impact across all platforms.
+							Everything you need to scale your content and maximize impact.
 						</p>
 					</motion.div>
 
@@ -156,7 +154,7 @@ export default function ServicesPage() {
 								<div className="flex-shrink-0 w-12 h-12 bg-primary rounded-full flex items-center justify-center">
 									<Check className="w-6 h-6 text-white" strokeWidth={3} />
 								</div>
-								<p className="text-lg font-semibold text-primary-dark">{item}</p>
+								<p className="text-lg font-medium text-primary-dark">{item}</p>
 							</motion.div>
 						))}
 					</motion.div>
@@ -172,15 +170,15 @@ export default function ServicesPage() {
 			>
 				<div className="bg-gradient-to-r from-primary to-secondary p-16 md:p-20 text-white">
 					<div className="max-w-7xl mx-auto px-6 text-center">
-						<h2 className="text-4xl md:text-5xl font-bold mb-6">
-							Ready to elevate your <span className="font-inria italic">content?</span>
+						<h2 className="text-4xl md:text-5xl font-normal mb-6">
+							Ready to elevate your <span className="font-medium text-neutral-700">content?</span>
 						</h2>
-						<p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-							Let's discuss how our services can amplify your brand's digital presence.
+						<p className="text-xl opacity-90 mb-8 max-w-4xl mx-auto">
+							Let's build something that moves your audience and drives real growth.
 						</p>
 						<Link href="/contact">
-							<button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
-								Start Your Project
+							<button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-medium text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+								Work with us
 							</button>
 						</Link>
 					</div>

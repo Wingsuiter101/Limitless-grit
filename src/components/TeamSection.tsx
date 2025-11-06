@@ -35,8 +35,8 @@ export default function TeamSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-bold text-primary-dark mb-6">
-            Our <span className="font-inria italic text-primary">Team</span>
+          <h2 className="text-5xl md:text-6xl font-medium text-primary-dark mb-6">
+            Our <span className="text-primary">Team</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Meet the creative minds behind Limitless Grit - a passionate team dedicated to 
@@ -65,14 +65,14 @@ export default function TeamSection() {
                 
                 {/* Specialty badge */}
                 <div className="absolute -bottom-3 left-4 right-4 bg-white rounded-full py-2 px-4 shadow-lg">
-                  <p className="text-primary font-semibold text-sm text-center">
+                  <p className="text-primary font-medium text-sm text-center">
                     {member.specialty}
                   </p>
                 </div>
               </div>
 
               <div className="text-center pt-4">
-                <h4 className="text-xl font-bold text-primary-dark mb-1">
+                <h4 className="text-xl font-medium text-primary-dark mb-1">
                   {member.name}
                 </h4>
                 <p className="text-gray-600">{member.role}</p>
@@ -90,15 +90,15 @@ export default function TeamSection() {
           className="text-center"
         >
           <div className="bg-white rounded-3xl p-12 shadow-lg">
-            <h3 className="text-3xl md:text-4xl font-bold text-primary-dark mb-6">
+            <h3 className="text-3xl md:text-4xl font-medium text-primary-dark mb-6">
               Ready to transform your{' '}
-              <span className="font-inria italic text-primary">personal brand?</span>
+              <span className="text-primary">personal brand?</span>
             </h3>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
               Join hundreds of leaders who have discovered their unique voice 
               and amplified their impact with our proven methodology.
             </p>
-            <button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-medium text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
               Start Your Transformation
             </button>
           </div>

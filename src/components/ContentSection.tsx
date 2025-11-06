@@ -7,7 +7,7 @@ const services = [
   {
     icon: Scissors,
     title: "Content Alchemy",
-    description: "Short-form & long form edits with intention. We shape podcasts, reels, and shorts into scroll-stopping stories built to resonate across platforms."
+    description: "Short-form & long form edits with intention. We shape content, reels, and shorts into scroll-stopping stories built to resonate across platforms."
   },
   {
     icon: Bot,
@@ -40,13 +40,13 @@ export default function ContentSection() {
             className="space-y-8"
           >
             <div>
-              <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-6">
+              <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
                 Our Services
               </div>
               
-              <h2 className="text-5xl md:text-6xl font-bold text-primary-dark mb-6 leading-tight">
+              <h2 className="text-5xl md:text-6xl font-normal text-primary-dark mb-6 leading-tight">
                 What we{' '}
-                <span className="font-inria italic text-primary">deliver</span>
+                <span className="font-medium text-primary">deliver</span>
               </h2>
               
               <p className="text-xl text-gray-600 leading-relaxed mb-8">
@@ -70,7 +70,7 @@ export default function ContentSection() {
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
                     <service.icon className="w-6 h-6 text-primary" />
                   </div>
-                  <h3 className="text-lg font-bold text-primary-dark mb-2">
+                  <h3 className="text-lg font-medium text-primary-dark mb-2">
                     {service.title}
                   </h3>
                   <p className="text-gray-600 text-sm">
@@ -86,7 +86,7 @@ export default function ContentSection() {
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              <button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-medium text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Explore Our Content
               </button>
             </motion.div>

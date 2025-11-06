@@ -25,11 +25,11 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-6xl md:text-7xl font-bold text-primary-dark mb-6">
-              Let's <span className="font-inria italic text-primary">Connect</span>
+            <h1 className="text-6xl md:text-7xl font-normal text-primary-dark mb-6">
+              Let's <span className="font-medium text-primary">Connect</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto">
-              Tell us about your project and goals. We'll get back within 24 hours with the best next step.
+            <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto">
+              Take the first step toward creating content that drives real growth.
             </p>
           </motion.div>
         </div>
@@ -60,10 +60,10 @@ export default function ContactPage() {
                       <span className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/20">
                         <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 md:w-7 md:h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                       </span>
-                      <span className="hidden md:inline text-xs font-semibold tracking-wider uppercase text-white/80">Email Us</span>
+                      <span className="hidden md:inline text-xs font-medium tracking-wider uppercase text-white/80">Email Us</span>
                       <span className="flex items-baseline">
                         <span className="text-2xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white">hello@</span>
-                        <span className="text-3xl md:text-6xl lg:text-7xl font-inria italic tracking-tight text-white">limitlessgrit.com</span>
+                        <span className="text-3xl md:text-6xl lg:text-7xl font-normal tracking-tight text-white">limitlessgrit.com</span>
                       </span>
                       {/* sheen over entire pill */}
                       <motion.span 
@@ -79,15 +79,6 @@ export default function ContactPage() {
               </motion.div>
             </motion.div>
           </div>
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-gray-500 mt-6 text-sm"
-          >
-            We respond within 24 hours.
-          </motion.p>
         </div>
       </section>
 
@@ -105,7 +96,7 @@ export default function ContactPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-4xl font-inria italic text-white leading-relaxed"
+            className="text-2xl md:text-4xl text-white leading-relaxed"
           >
             “Marketing is no longer about the stuff that you make, but about the <span className="text-primary">stories you tell</span>.”
           </motion.blockquote>
@@ -114,7 +105,7 @@ export default function ContactPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mt-6 text-lg text-gray-300 font-semibold"
+            className="mt-6 text-lg text-gray-300 font-medium"
           >
             — Seth Godin
           </motion.p>

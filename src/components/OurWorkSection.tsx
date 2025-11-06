@@ -34,11 +34,12 @@ const videos = [
 ]
 
 export default function OurWorkSection() {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
   const shorts = [
-    { id: 'ZZgX3-Ep9YY', title: 'Pareto Principle - Jay Papasan' },
-    { id: 't58yCZzzfOc', title: 'AI Writing - Steve Yegge' },
-    { id: 'ojSA_KCf17A', title: 'Side Hustle - Sundas Khalid' },
-    { id: 'M8ioFOt5R4k', title: 'No Shortcuts - Ani Sanyal' }
+    { id: 'ZZgX3-Ep9YY', title: 'Pareto Principle - Jay Papasan', thumbnail: `${basePath}/Jay-papasan.png` },
+    { id: 't58yCZzzfOc', title: 'AI Writing - Steve Yegge', thumbnail: `${basePath}/Steve-yegge.png` },
+    { id: 'ojSA_KCf17A', title: 'Side Hustle - Sundas Khalid', thumbnail: `${basePath}/Sundas-khalid.png` },
+    { id: 'M8ioFOt5R4k', title: 'No Shortcuts - Ani Sanyal', thumbnail: `${basePath}/Ani-sanyal.png` }
   ]
 
   const longFormVideos = [
@@ -51,6 +52,7 @@ export default function OurWorkSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isDraggingShorts, setIsDraggingShorts] = useState(false)
   const [isPlayingShorts, setIsPlayingShorts] = useState(false)
+  const [showShortsThumbnail, setShowShortsThumbnail] = useState(true)
   const shortsAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
   const shortsProgressControls = useAnimationControls()
 
@@ -90,6 +92,20 @@ export default function OurWorkSection() {
       rel: (idx - activeIndex + shorts.length) % shorts.length
     }))
   }, [activeIndex])
+
+  // Reset thumbnail overlay when switching shorts (synchronously to avoid flash)
+  useEffect(() => {
+    // Set thumbnail immediately before video changes
+    setShowShortsThumbnail(true)
+    setIsPlayingShorts(false)
+  }, [activeIndex])
+
+  // Hide thumbnail when video starts playing
+  useEffect(() => {
+    if (isPlayingShorts) {
+      setShowShortsThumbnail(false)
+    }
+  }, [isPlayingShorts])
 
   // Auto-play for shorts
   useEffect(() => {
@@ -348,12 +364,11 @@ export default function OurWorkSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary-dark">
-            Our <span className="font-inria italic text-primary">Work</span>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-primary-dark">
+            Our <span className="font-medium text-primary">Work</span>
           </h2>
           <p className="mt-8 mb-4 text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4">
-            A mix of long-form podcasts and shorts. Two deep-dive episodes and two vertical highlights
-            that showcase the storytelling and production quality we bring to every project.
+            Real results from real projects. See the quality we deliver.
           </p>
         </motion.div>
 
@@ -367,7 +382,7 @@ export default function OurWorkSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                   viewport={{ once: true }}
-                  className="text-[15vw] leading-none md:text-[12rem] font-inria italic font-medium tracking-tight text-primary-dark select-none"
+                  className="text-[14vw] leading-none md:text-[10rem] tracking-tight text-primary-dark select-none lg:-ml-2"
                 >
                   <span className="text-primary">S</span>horts
                 </motion.h3>
@@ -379,55 +394,53 @@ export default function OurWorkSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.35 }}
-                    className="text-lg md:text-2xl font-semibold text-gray-800"
+                    className="text-lg md:text-2xl font-medium text-gray-800"
                   >
                     {shorts[activeIndex]?.title}
                   </motion.p>
                 </AnimatePresence>
 
-                <div className="w-full max-w-xs mx-auto lg:mx-0 lg:max-w-[200px] mt-4 self-center lg:self-start">
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    className="flex items-center justify-center lg:justify-start space-x-4 mt-4"
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-center justify-center lg:justify-start space-x-4 mt-4"
+                >
+                  <button
+                    onClick={() => setActiveIndex((prev) => (prev - 1 + shorts.length) % shorts.length)}
+                    className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
                   >
-                    <button
-                      onClick={() => setActiveIndex((prev) => (prev - 1 + shorts.length) % shorts.length)}
-                      className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                    <svg
+                      className="w-4 h-4 text-gray-700 group-hover:text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        className="w-4 h-4 text-gray-700 group-hover:text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
-                      </svg>
-                    </button>
-                    <div className="flex items-center space-x-2">
-                      <p className="text-base font-semibold text-gray-600">
-                        <span className="text-primary font-inria italic">{activeIndex + 1}</span> of {shorts.length}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setActiveIndex((prev) => (prev + 1) % shorts.length)}
-                      className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                  </button>
+                  <div className="flex items-center space-x-2">
+                    <p className="text-base font-medium text-gray-600">
+                      <span className="text-primary">{activeIndex + 1}</span> of {shorts.length}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setActiveIndex((prev) => (prev + 1) % shorts.length)}
+                    className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                  >
+                    <svg
+                      className="w-4 h-4 text-gray-700 group-hover:text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        className="w-4 h-4 text-gray-700 group-hover:text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                      </svg>
-                    </button>
-                  </motion.div>
-                </div>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </button>
+                </motion.div>
               </div>
             </div>
 
@@ -479,7 +492,7 @@ export default function OurWorkSection() {
                           <div className="w-full h-full relative z-10" />
                         ) : (
                           <img
-                            src={`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`}
+                            src={item.thumbnail || `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`}
                             alt="Upcoming short preview"
                             className="w-full h-full object-cover"
                           />
@@ -489,6 +502,36 @@ export default function OurWorkSection() {
                   })}
                 {/* Persistent Shorts player overlay (wrapper only; YT mounts inside) */}
                 <div ref={shortsPlayerWrapperRef} className="absolute inset-0 w-full h-full z-30 rounded-2xl overflow-hidden" />
+                
+                {/* Custom thumbnail overlay - persistent layer to prevent flash */}
+                {shorts[activeIndex].thumbnail && (
+                  <div 
+                    className={`absolute inset-0 w-full h-full z-40 rounded-2xl overflow-hidden cursor-pointer bg-black transition-opacity duration-500 ${
+                      showShortsThumbnail ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                    }`}
+                    onClick={() => {
+                      setShowShortsThumbnail(false)
+                      if (shortsPlayerRef.current?.playVideo) {
+                        shortsPlayerRef.current.playVideo()
+                      }
+                    }}
+                  >
+                    <img
+                      key={activeIndex}
+                      src={shorts[activeIndex].thumbnail!}
+                      alt={shorts[activeIndex].title}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Play button overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-20 h-20 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-colors">
+                        <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </motion.div>
             </div>
           </div>
@@ -507,7 +550,7 @@ export default function OurWorkSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                   viewport={{ once: true }}
-                  className="text-[15vw] leading-none md:text-[12rem] font-inria italic font-medium tracking-tight text-primary-dark select-none"
+                  className="text-[14vw] leading-none md:text-[10rem] tracking-tight text-primary-dark select-none lg:-ml-2"
                 >
                   <span className="text-primary">L</span>ong Form
                 </motion.h3>
@@ -519,60 +562,58 @@ export default function OurWorkSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.35 }}
-                    className="text-lg md:text-2xl font-semibold text-gray-800"
+                    className="text-lg md:text-2xl font-medium text-gray-800"
                   >
                     {longFormVideos[longFormActiveIndex]?.title}
                   </motion.p>
                 </AnimatePresence>
 
-                <div className="w-full max-w-xs mx-auto lg:mx-0 lg:max-w-[200px] mt-4 self-center lg:self-start">
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    className="flex items-center justify-center lg:justify-start space-x-4 mt-4"
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-center justify-center lg:justify-start space-x-4 mt-4"
+                >
+                  <button
+                    onClick={() =>
+                      setLongFormActiveIndex((prev) => (prev - 1 + longFormVideos.length) % longFormVideos.length)
+                    }
+                    className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
                   >
-                    <button
-                      onClick={() =>
-                        setLongFormActiveIndex((prev) => (prev - 1 + longFormVideos.length) % longFormVideos.length)
-                      }
-                      className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                    <svg
+                      className="w-4 h-4 text-gray-700 group-hover:text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        className="w-4 h-4 text-gray-700 group-hover:text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
-                      </svg>
-                    </button>
-                    <div className="flex items-center space-x-2">
-                      <p className="text-base font-semibold text-gray-600">
-                        <span className="text-primary font-inria italic">{longFormActiveIndex + 1}</span> of{' '}
-                        {longFormVideos.length}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() =>
-                        setLongFormActiveIndex((prev) => (prev + 1) % longFormVideos.length)
-                      }
-                      className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                  </button>
+                  <div className="flex items-center space-x-2">
+                    <p className="text-base font-medium text-gray-600">
+                      <span className="text-primary">{longFormActiveIndex + 1}</span> of{' '}
+                      {longFormVideos.length}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() =>
+                      setLongFormActiveIndex((prev) => (prev + 1) % longFormVideos.length)
+                    }
+                    className="group px-4 py-2 rounded-full bg-gray-200 hover:bg-primary transition-colors shadow-sm"
+                  >
+                    <svg
+                      className="w-4 h-4 text-gray-700 group-hover:text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        className="w-4 h-4 text-gray-700 group-hover:text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                      </svg>
-                    </button>
-                  </motion.div>
-                </div>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </button>
+                </motion.div>
               </div>
             </div>
 
@@ -655,15 +696,15 @@ export default function OurWorkSection() {
       >
         <div className="bg-gradient-to-r from-neutral-700 to-neutral-800 p-16 md:p-20 text-white">
           <div className="max-w-7xl mx-auto px-6 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to create standout <span className="font-inria italic text-primary">content?</span>
+            <h2 className="text-4xl md:text-5xl font-normal mb-6">
+              Ready to create standout <span className="font-medium text-primary">content?</span>
             </h2>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
               Let's turn ideas into standout episodes and scroll-stopping shorts.
             </p>
             <Link href="/contact">
-              <button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
-                Start Your Project
+              <button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-medium text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+                Work with us
               </button>
             </Link>
           </div>

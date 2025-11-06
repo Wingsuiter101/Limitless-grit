@@ -15,8 +15,8 @@ export default function PrivacyPolicyPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-primary-dark mb-6">
-              Privacy <span className="font-inria italic text-primary">Policy</span>
+            <h1 className="text-5xl md:text-6xl font-medium text-primary-dark mb-6">
+              Privacy <span className="text-primary">Policy</span>
             </h1>
             <p className="text-lg text-gray-600">
               Last updated: January 2025
@@ -44,12 +44,12 @@ export default function PrivacyPolicyPage() {
 
             {/* Information We Collect */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Information We Collect
               </h2>
               <div className="space-y-4 text-gray-600">
                 <div>
-                  <h3 className="text-xl font-semibold text-primary-dark mb-2">Personal Information</h3>
+                  <h3 className="text-xl font-medium text-primary-dark mb-2">Personal Information</h3>
                   <p className="leading-relaxed">
                     We may collect personal information that you voluntarily provide to us when you:
                   </p>
@@ -65,7 +65,7 @@ export default function PrivacyPolicyPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-primary-dark mb-2">Automatically Collected Information</h3>
+                  <h3 className="text-xl font-medium text-primary-dark mb-2">Automatically Collected Information</h3>
                   <p className="leading-relaxed">
                     When you visit our website, we may automatically collect certain information about your device, including:
                   </p>
@@ -82,7 +82,7 @@ export default function PrivacyPolicyPage() {
 
             {/* How We Use Your Information */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 How We Use Your Information
               </h2>
               <div className="space-y-3 text-gray-600">
@@ -100,7 +100,7 @@ export default function PrivacyPolicyPage() {
 
             {/* Information Sharing */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Information Sharing and Disclosure
               </h2>
               <div className="space-y-3 text-gray-600">
@@ -118,7 +118,7 @@ export default function PrivacyPolicyPage() {
 
             {/* Data Security */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Data Security
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -128,7 +128,7 @@ export default function PrivacyPolicyPage() {
 
             {/* Your Rights */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Your Rights
               </h2>
               <div className="space-y-3 text-gray-600">
@@ -149,7 +149,7 @@ export default function PrivacyPolicyPage() {
 
             {/* Cookies */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Cookies and Tracking Technologies
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -159,7 +159,7 @@ export default function PrivacyPolicyPage() {
 
             {/* Third-Party Links */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Third-Party Links
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -169,7 +169,7 @@ export default function PrivacyPolicyPage() {
 
             {/* Children's Privacy */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Children's Privacy
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -179,7 +179,7 @@ export default function PrivacyPolicyPage() {
 
             {/* Changes to Policy */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Changes to This Privacy Policy
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -189,7 +189,7 @@ export default function PrivacyPolicyPage() {
 
             {/* Contact */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              <h2 className="text-3xl font-medium text-primary-dark mb-4">
                 Contact Us
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -204,7 +204,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Back to Home */}
           <div className="mt-12 pt-8 border-t border-gray-200 text-center">
-            <Link href="/" className="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+            <Link href="/" className="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl">
               Back to Home
             </Link>
           </div>

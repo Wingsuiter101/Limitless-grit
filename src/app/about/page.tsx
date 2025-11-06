@@ -35,7 +35,7 @@ const milestones = [
   {
     year: "2020",
     title: "The Beginning",
-    description: "Started as a podcast exploring creative storytelling and brand development"
+    description: "Started with content exploring creative storytelling and brand development"
   },
   {
     year: "2021", 
@@ -45,7 +45,7 @@ const milestones = [
   {
     year: "2022",
     title: "AI Integration",
-    description: "Pioneered the integration of AI tools into our creative workflow for enhanced efficiency"
+    description: "Integrated AI tools into our creative workflow for enhanced efficiency"
   },
   {
     year: "2023",
@@ -81,11 +81,11 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-6xl md:text-7xl font-bold text-primary-dark mb-6">
-              About <span className="font-inria italic text-primary">Us</span>
+            <h1 className="text-6xl md:text-7xl font-normal text-primary-dark mb-6">
+              About <span className="font-medium text-primary">Us</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto">
-              We are a creative-first agency powered by AI, technology, and storytelling that connects, resonates, and inspires action.
+            <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto">
+              Creative storytelling that cuts through the noise and drives real engagement.
             </p>
           </motion.div>
         </div>
@@ -103,21 +103,21 @@ export default function AboutPage() {
               className="space-y-8"
             >
               <div>
-                <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-6 text-center md:text-left">
-                  Our <span className="font-inria italic text-primary">Story</span>
+                <h2 className="text-4xl md:text-5xl font-normal text-primary-dark mb-6 text-center md:text-left">
+                  Our <span className="font-medium text-primary">Story</span>
                 </h2>
                 
                 <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
                   <p>
-                    <strong className="text-primary-dark">Limitless Grit</strong> began with a simple yet powerful focus: exploring the intersection of creativity and technology. What started as conversations about meaningful content creation naturally evolved into a creative-first agency powered by AI, technology, and storytelling.
+                    <strong className="text-primary-dark">Limitless Grit</strong> began with a simple yet powerful focus: exploring the intersection of creativity and technology. What started as conversations about meaningful content creation naturally evolved into a creative-first agency built on storytelling, strategy, and execution.
                   </p>
                   
                   <p>
-                    Founded by <strong className="text-primary-dark">Shristi</strong> and <strong className="text-primary-dark">Jugal</strong>, our journey has been driven by one core belief: that every brand has a unique story worth telling, and technology should amplify, not replace, human creativity to craft narratives that connect, resonate, and inspire action.
+                    Founded by <strong className="text-primary-dark">Shristi</strong> and <strong className="text-primary-dark">Jugal</strong>, our journey has been driven by one core belief: that every brand has a unique story worth telling. We craft narratives that connect, resonate, and inspire action through creative excellence and smart use of modern tools.
                   </p>
                   
                   <p>
-                    Today, we're a focused studio specializing in video editing, branding, AI-integrated creative services, and web development. We collaborate with founders, creators, and early-stage teams to develop high-quality, high-impact content that moves fast without losing clarity or soul.
+                    Today, we're a focused studio specializing in video editing, branding, creative services, and web development. We collaborate with founders, creators, and early-stage teams to develop high-quality, high-impact content that moves fast without losing clarity or soul.
                   </p>
                 </div>
               </div>
@@ -154,8 +154,8 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-6">
-              Our <span className="font-inria italic text-primary">Journey</span>
+            <h2 className="text-4xl md:text-5xl font-normal text-primary-dark mb-6">
+              Our <span className="font-medium text-primary">Journey</span>
             </h2>
             <p className="text-xl text-gray-600">
               From humble beginnings to becoming a creative-first agency
@@ -183,9 +183,9 @@ export default function AboutPage() {
                     <div className="bg-white rounded-2xl p-6 shadow-lg">
                       <div className="flex flex-col sm:flex-row sm:items-center mb-4 gap-3">
                         <div className="w-14 h-14 sm:w-16 sm:h-16 bg-primary rounded-full flex items-center justify-center sm:mr-4 shrink-0">
-                          <span className="text-white font-bold text-base sm:text-lg">{milestone.year}</span>
+                          <span className="text-white font-medium text-base sm:text-lg">{milestone.year}</span>
                         </div>
-                        <h3 className="text-lg sm:text-xl font-bold text-primary-dark">{milestone.title}</h3>
+                        <h3 className="text-lg sm:text-xl font-medium text-primary-dark">{milestone.title}</h3>
                       </div>
                       <p className="text-gray-600 text-sm sm:text-base">{milestone.description}</p>
                     </div>
@@ -213,15 +213,14 @@ export default function AboutPage() {
       >
         <div className="bg-gradient-to-r from-primary to-secondary p-16 md:p-20 text-white">
           <div className="max-w-7xl mx-auto px-6 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to work <span className="font-inria italic">together?</span>
+            <h2 className="text-4xl md:text-5xl font-normal mb-6">
+              Let's work <span className="font-medium text-neutral-700">together.</span>
             </h2>
-            <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              Let's start a conversation about how we can help simplify your content creation 
-              and amplify your brand's unique story.
+            <p className="text-xl opacity-90 mb-8 max-w-4xl mx-auto">
+              We'd love to hear what you're building and how we can help.
             </p>
             <Link href="/contact">
-              <button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+              <button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-medium text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
                 Get In Touch
               </button>
             </Link>

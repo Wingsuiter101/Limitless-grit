@@ -46,9 +46,9 @@ export default function EditingProcessSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-4">
+          <h2 className="text-4xl md:text-5xl font-normal text-primary-dark mb-4">
             Our Editing{' '}
-            <span className="font-inria italic text-primary">Process</span>
+            <span className="font-medium text-primary">Process</span>
           </h2>
           <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
             Every piece of content goes through our refined four-stage process, ensuring 
@@ -75,7 +75,7 @@ export default function EditingProcessSection() {
                 </div>
                 
                 <div className="flex-1">
-                  <h3 className="text-xl md:text-2xl font-bold mb-3">
+                  <h3 className="text-xl md:text-2xl font-medium mb-3">
                     {step.title}
                   </h3>
                   <p className={`text-base leading-relaxed ${
@@ -109,16 +109,16 @@ export default function EditingProcessSection() {
           className="text-center mt-16"
         >
           <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-12 text-white">
-            <h3 className="text-2xl md:text-3xl font-bold mb-6">
+            <h3 className="text-2xl md:text-3xl font-medium mb-6">
               Ready to see our process{' '}
-              <span className="font-inria italic">in action?</span>
+              <span className="">in action?</span>
             </h3>
             <p className="text-base md:text-lg opacity-90 mb-8 max-w-2xl mx-auto">
               From raw footage to polished content that drives engagement - 
               let us show you what our refined process can do for your brand.
             </p>
-            <button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-semibold text-base md:text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-              Start Your Project
+            <button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-medium text-base md:text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              Work with us
             </button>
           </div>
         </motion.div>

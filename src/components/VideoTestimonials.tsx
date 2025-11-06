@@ -39,12 +39,12 @@ export default function VideoTestimonials() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-bold text-primary-dark mb-6">
+          <h2 className="text-5xl md:text-6xl font-medium text-primary-dark mb-6">
             We make sure we build every
           </h2>
           <h3 className="text-4xl md:text-5xl font-light text-primary-dark mb-8">
             brand on a solid{' '}
-            <span className="font-inria italic text-primary">foundation.</span>
+            <span className="text-primary">foundation.</span>
           </h3>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Hear directly from leaders who have transformed their brands and 
@@ -64,15 +64,15 @@ export default function VideoTestimonials() {
           className="text-center mt-16"
         >
           <div className="bg-primary rounded-3xl p-12 text-white">
-            <h3 className="text-3xl md:text-4xl font-bold mb-6">
+            <h3 className="text-3xl md:text-4xl font-medium mb-6">
               Ready to share your{' '}
-              <span className="font-inria italic">success story?</span>
+              <span className="">success story?</span>
             </h3>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
               Join these successful leaders and start building your brand 
               on a foundation that drives real results.
             </p>
-            <button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <button className="bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-full font-medium text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
               Get Started Today
             </button>
           </div>
@@ -131,10 +131,10 @@ function SingleTestimonialCarousel() {
           <blockquote className="text-gray-600 mb-6 leading-relaxed text-lg">"{t.quote}"</blockquote>
           <div className="flex items-center space-x-4">
             <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-white font-bold">{t.name.split(' ').map(n => n[0]).join('')}</span>
+              <span className="text-white font-medium">{t.name.split(' ').map(n => n[0]).join('')}</span>
             </div>
             <div>
-              <p className="font-semibold text-primary-dark">{t.name}</p>
+              <p className="font-medium text-primary-dark">{t.name}</p>
               <p className="text-gray-500 text-sm">{t.role}</p>
               <p className="text-primary text-sm font-medium">{t.company}</p>
             </div>

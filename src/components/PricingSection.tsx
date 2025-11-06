@@ -63,8 +63,8 @@ export default function PricingSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-bold text-primary-dark mb-6">
-            Choose Your <span className="font-inria italic text-primary">Plan</span>
+          <h2 className="text-5xl md:text-6xl font-medium text-primary-dark mb-6">
+            Choose Your <span className="text-primary">Plan</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Transparent pricing for every stage of your content journey. All plans include our signature creative
@@ -86,17 +86,17 @@ export default function PricingSection() {
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-primary text-white px-6 py-2 rounded-full text-sm font-semibold">
+                  <span className="bg-primary text-white px-6 py-2 rounded-full text-sm font-medium">
                     Most Popular
                   </span>
                 </div>
               )}
 
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-primary-dark mb-2">{plan.name}</h3>
+                <h3 className="text-2xl font-medium text-primary-dark mb-2">{plan.name}</h3>
                 <p className="text-gray-600 mb-4">{plan.description}</p>
                 <div className="flex items-baseline justify-center">
-                  <span className="text-4xl font-bold text-primary">{plan.price}</span>
+                  <span className="text-4xl font-medium text-primary">{plan.price}</span>
                   <span className="text-gray-600 ml-1">{plan.duration}</span>
                 </div>
               </div>
@@ -111,7 +111,7 @@ export default function PricingSection() {
               </ul>
 
               <button
-                className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-300 ${
+                className={`w-full py-4 rounded-xl font-medium text-lg transition-all duration-300 ${
                   plan.popular
                     ? 'bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl'
                     : 'border-2 border-primary text-primary hover:bg-primary hover:text-white'
@@ -133,7 +133,7 @@ export default function PricingSection() {
           <p className="text-gray-600 mb-4">
             Need something different? We create custom packages for unique requirements.
           </p>
-          <button className="text-primary hover:text-primary/80 font-semibold underline">
+          <button className="text-primary hover:text-primary/80 font-medium underline">
             Schedule a consultation →
           </button>
         </motion.div>
