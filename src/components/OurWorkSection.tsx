@@ -43,16 +43,17 @@ export default function OurWorkSection() {
   ]
 
   const longFormVideos = [
-    { id: 'o7Asyo9s2_M', title: 'Gergely Orosz - A Life Engineered' },
-    { id: 'Dou3EjQBpuM', title: 'Jay Papasan - Limitless Grit' },
-    { id: 'XvtuW0UN4aA', title: 'Sundas Khalid - A Life Engineered' },
-    { id: '8PkIXuPm-Fo', title: 'Bill Simmons - MadTech Momentum' }
+    { id: 'o7Asyo9s2_M', title: 'Gergely Orosz - A Life Engineered', thumbnail: 'https://img.youtube.com/vi/o7Asyo9s2_M/maxresdefault.jpg' },
+    { id: 'Dou3EjQBpuM', title: 'Jay Papasan - Limitless Grit', thumbnail: 'https://img.youtube.com/vi/Dou3EjQBpuM/maxresdefault.jpg' },
+    { id: 'XvtuW0UN4aA', title: 'Sundas Khalid - A Life Engineered', thumbnail: 'https://img.youtube.com/vi/XvtuW0UN4aA/maxresdefault.jpg' },
+    { id: '8PkIXuPm-Fo', title: 'Bill Simmons - MadTech Momentum', thumbnail: 'https://img.youtube.com/vi/8PkIXuPm-Fo/maxresdefault.jpg' }
   ]
 
   const [activeIndex, setActiveIndex] = useState(0)
   const [isDraggingShorts, setIsDraggingShorts] = useState(false)
   const [isPlayingShorts, setIsPlayingShorts] = useState(false)
   const [showShortsThumbnail, setShowShortsThumbnail] = useState(true)
+  const [showLongFormThumbnail, setShowLongFormThumbnail] = useState(true)
   const shortsAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
   const shortsProgressControls = useAnimationControls()
 
@@ -154,6 +155,19 @@ export default function OurWorkSection() {
   const [isPlayingLongForm, setIsPlayingLongForm] = useState(false)
   const longFormAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
   const longFormProgressControls = useAnimationControls()
+
+  // Reset thumbnail overlay when switching long form videos
+  useEffect(() => {
+    setShowLongFormThumbnail(true)
+    setIsPlayingLongForm(false)
+  }, [longFormActiveIndex])
+
+  // Hide long form thumbnail when video starts playing
+  useEffect(() => {
+    if (isPlayingLongForm) {
+      setShowLongFormThumbnail(false)
+    }
+  }, [isPlayingLongForm])
   
   const longFormOrdered = useMemo(() => {
     return longFormVideos.map((item, idx) => ({
@@ -675,6 +689,36 @@ export default function OurWorkSection() {
                   })}
                 {/* Persistent Long-form player overlay (wrapper only; YT mounts inside) */}
                 <div ref={longsPlayerWrapperRef} className="absolute inset-0 w-full h-full z-30 rounded-2xl overflow-hidden" />
+                
+                {/* Custom thumbnail overlay - persistent layer to prevent flash */}
+                {longFormVideos[longFormActiveIndex].thumbnail && (
+                  <div 
+                    className={`absolute inset-0 w-full h-full z-40 rounded-2xl overflow-hidden cursor-pointer bg-black transition-opacity duration-500 ${
+                      showLongFormThumbnail ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                    }`}
+                    onClick={() => {
+                      setShowLongFormThumbnail(false)
+                      if (longFormPlayerRef.current?.playVideo) {
+                        longFormPlayerRef.current.playVideo()
+                      }
+                    }}
+                  >
+                    <img
+                      key={longFormActiveIndex}
+                      src={longFormVideos[longFormActiveIndex].thumbnail!}
+                      alt={longFormVideos[longFormActiveIndex].title}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Play button overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-20 h-20 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-colors">
+                        <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </motion.div>
             </div>
           </div>
